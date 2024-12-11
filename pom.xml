@@ -23,6 +23,18 @@
     <!-- 依赖版本控制 -->
     <dependencyManagement>
         <dependencies>
+            <!-- SpringBoot的依赖配置，统一和管理依赖版本 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <!-- spring-boot-dependencies本身不是一个库，是一个 依赖管理清单
+                     它定义了大量常用依赖的版本，而不是具体的库文件 -->
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.4.0</version>
+                <!-- 指定依赖类型 -->
+                <type>pom</type>
+                <!-- import 作用于POM包时允许将另一个POM文件中的依赖管理部分合并到当前项目的依赖管理中 -->
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -32,7 +44,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>4.0.0-beta-1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
