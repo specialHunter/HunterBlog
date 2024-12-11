@@ -11,6 +11,7 @@
     <modules>
         <module>blog-framework</module>
         <module>blog-admin</module>
+        <module>blog-front</module>
     </modules>
 
     <properties>
