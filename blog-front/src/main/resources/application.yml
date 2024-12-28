@@ -1,0 +1,23 @@
+server:
+  # 前端模板调用的端口为7777，故保持一致
+  port: 7777
+
+spring:
+  datasource: # 数据源
+    url: jdbc:mysql://app_mysql:3306/hunter_blog
+    username: root
+    password: 123456.root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+mybatis-plus:
+  configuration:
+    # 日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: delFlag # 逻辑删除的字段名
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto # 主键自增
+

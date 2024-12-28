@@ -1,0 +1,21 @@
+services:
+  spring:
+    container_name: app_hunter_blog
+    build: . # 表示使用构建的镜像，. 表示使用当前目录下的Dockerfile进行构建
+    ports:
+      - "7777:7777"
+    depends_on:
+      mysql:
+        condition: service_healthy # mysql服务稳定后再创建项目容器
+  mysql:
+    container_name: app_mysql
+    image: mysql/mysql-server:8.0.32 # 表示使用对应的镜像，自动从仓库下载，然后启动容器
+    environment:
+      MYSQL_ROOT_HOST: '%' # 登录的主机
+      MYSQL_ROOT_PASSWORD: '123456.root' # root账号的密码
+      MYSQL_DATABASE: 'hunter_blog' # 启动时创建的数据库
+      TZ: 'Asia/Shanghai' # 时区
+    volumes:
+      - ./blog-front/src/main/resources/sql:/docker-entrypoint-initdb.d # 挂载需要执行的sql脚本所在目录
+    ports:
+      - "3306:3306" # 对外访问的端口
