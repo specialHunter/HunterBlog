@@ -1,7 +1,7 @@
 package com.hunter.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hunter.entity.Article;
+import com.hunter.domain.entity.Article;
 import com.hunter.mapper.ArticleMapper;
 import com.hunter.service.ArticleService;
 import org.springframework.stereotype.Service;

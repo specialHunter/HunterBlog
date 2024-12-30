@@ -1,6 +1,6 @@
 package com.hunter.controller;
 
-import com.hunter.entity.Article;
+import com.hunter.domain.entity.Article;
 import com.hunter.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;

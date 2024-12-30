@@ -1,7 +1,7 @@
 package com.hunter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hunter.entity.Article;
+import com.hunter.domain.entity.Article;
 
 /**
  * @author Hunter

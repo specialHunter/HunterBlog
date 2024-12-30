@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hunter.mapper.ArticleMapper">
 
-    <resultMap id="BaseResultMap" type="com.hunter.entity.Article">
+    <resultMap id="BaseResultMap" type="com.hunter.domain.entity.Article">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>

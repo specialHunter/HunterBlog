@@ -19,6 +19,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mybatis-plus>3.5.9</mybatis-plus>
+        <spring-boot-dependencies>3.4.0</spring-boot-dependencies>
     </properties>
 
     <!-- 依赖版本控制 -->
@@ -30,7 +31,7 @@
                 <!-- spring-boot-dependencies本身不是一个库，是一个 依赖管理清单
                      它定义了大量常用依赖的版本，而不是具体的库文件 -->
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.4.0</version>
+                <version>${spring-boot-dependencies}</version>
                 <!-- 指定依赖类型 -->
                 <type>pom</type>
                 <!-- import 作用于POM包时允许将另一个POM文件中的依赖管理部分合并到当前项目的依赖管理中 -->
@@ -45,8 +46,15 @@
         </dependencies>
     </dependencyManagement>
 
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.1</version>
+            </plugin>
+
             <!-- 编译项目的源码 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -58,7 +66,6 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

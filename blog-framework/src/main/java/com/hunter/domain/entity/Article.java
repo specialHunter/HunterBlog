@@ -1,4 +1,4 @@
-package com.hunter.entity;
+package com.hunter.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

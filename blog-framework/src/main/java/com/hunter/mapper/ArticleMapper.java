@@ -1,7 +1,7 @@
 package com.hunter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hunter.entity.Article;
+import com.hunter.domain.entity.Article;
 
 /**
 * @author Hunter
