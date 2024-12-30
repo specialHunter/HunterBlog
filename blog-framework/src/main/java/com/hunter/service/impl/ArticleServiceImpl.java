@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author Hunter
- * @description 针对表【sg_article(文章表)】的数据库操作Service实现
+ * @description 针对表【hunter_article(文章表)】的数据库操作Service实现
  * @createDate 2024-12-29 10:42:42
  */
 @Service

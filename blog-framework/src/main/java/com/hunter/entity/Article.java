@@ -4,15 +4,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 文章表
- * @TableName sg_article
+ * @TableName hunter_article
  */
-@TableName(value ="sg_article")
+@TableName(value ="hunter_article")
 @Data
 public class Article implements Serializable {
     @TableField(exist = false)
