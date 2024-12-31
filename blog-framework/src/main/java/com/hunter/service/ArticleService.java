@@ -1,6 +1,7 @@
 package com.hunter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Article;
 
 /**
@@ -10,4 +11,9 @@ import com.hunter.domain.entity.Article;
  */
 public interface ArticleService extends IService<Article> {
 
+    /**
+     * 查询热门文章
+     * @return 热门文章
+     */
+    ResponseResult hotArticleList();
 }
