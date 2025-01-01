@@ -24,7 +24,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         implements ArticleService {
 
     @Override
-    public ResponseResult hotArticleList() {
+    public ResponseResult<?> hotArticleList() {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_RELEASE) // 已发布
                 .eq(Article::getDelFlag, SystemConstants.ARTICLE_NOT_DELETE) // 未删除

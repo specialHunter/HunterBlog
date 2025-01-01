@@ -29,8 +29,7 @@ public class ArticleController {
      * @return 热门文章
      */
     @RequestMapping(value = "/hotArticleList", method = RequestMethod.GET)
-    public ResponseResult hotArticleList() {
-        ResponseResult result = articleService.hotArticleList();
-        return result;
+    public ResponseResult<?> hotArticleList() {
+        return articleService.hotArticleList();
     }
 }

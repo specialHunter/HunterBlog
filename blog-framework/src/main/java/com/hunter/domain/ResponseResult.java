@@ -51,7 +51,7 @@ public class ResponseResult<T> implements Serializable {
         this.msg = msg;
     }
 
-    public static ResponseResult<Object> okResult(Object data) {
+    public static ResponseResult<?> okResult(Object data) {
         return new ResponseResult<>(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), data);
     }
 
