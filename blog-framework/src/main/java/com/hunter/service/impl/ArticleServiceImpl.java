@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Article;
+import com.hunter.domain.vo.HotArticleVo;
 import com.hunter.mapper.ArticleMapper;
 import com.hunter.service.ArticleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +35,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         page(page, queryWrapper);
 
         List<Article> articles = page.getRecords();
-        return ResponseResult.okResult(articles);
+
+        // bean拷贝，字段名 和 类型 都需要一致，否则无法拷贝
+        List<HotArticleVo> articleVos = new ArrayList<>();
+        for (Article article :
+                articles) {
+            HotArticleVo hotArticleVo = new HotArticleVo();
+            BeanUtils.copyProperties(article, hotArticleVo);
+            articleVos.add(hotArticleVo);
+        }
+
+        return ResponseResult.okResult(articleVos);
     }
 
 }
