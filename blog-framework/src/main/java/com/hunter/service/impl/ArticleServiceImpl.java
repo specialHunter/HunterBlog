@@ -9,10 +9,9 @@ import com.hunter.domain.entity.Article;
 import com.hunter.domain.vo.HotArticleVo;
 import com.hunter.mapper.ArticleMapper;
 import com.hunter.service.ArticleService;
-import org.springframework.beans.BeanUtils;
+import com.hunter.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,14 +37,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         List<Article> articles = page.getRecords();
 
         // bean拷贝，字段名 和 类型 都需要一致，否则无法拷贝
-        List<HotArticleVo> articleVos = new ArrayList<>();
-        for (Article article :
-                articles) {
-            HotArticleVo hotArticleVo = new HotArticleVo();
-            BeanUtils.copyProperties(article, hotArticleVo);
-            articleVos.add(hotArticleVo);
-        }
-
+        List<HotArticleVo> articleVos = BeanCopyUtils.copyBeanList(articles, HotArticleVo.class);
         return ResponseResult.okResult(articleVos);
     }
 
