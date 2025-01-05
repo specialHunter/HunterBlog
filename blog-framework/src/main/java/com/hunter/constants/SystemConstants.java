@@ -26,4 +26,9 @@ public class SystemConstants {
      * 文章未删除
      */
     public static final int ARTICLE_NOT_DELETE = 0;
+
+    /**
+     * 分类状态为正常
+     */
+    public static final String CATEGORY_NORMAL = "0";
 }

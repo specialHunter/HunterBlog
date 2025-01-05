@@ -10,16 +10,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 文章表
+ * 分类表
  *
- * @TableName hunter_article
+ * @TableName hunter_category
  */
-@TableName(value = "hunter_article")
+@TableName(value = "hunter_category")
 @Data
-public class Article implements Serializable {
+public class Category implements Serializable {
     @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -6959960046141216247L;
     /**
      *
      */
@@ -27,49 +26,24 @@ public class Article implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * 分类名
      */
-    private String title;
+    private String name;
 
     /**
-     * 文章内容
+     * 父分类id，如果没有父分类为-1
      */
-    private String content;
+    private Long pid;
 
     /**
-     * 文章摘要
+     * 描述
      */
-    private String summary;
+    private String description;
 
     /**
-     * 所属分类id
-     */
-    private Long categoryId;
-
-    /**
-     * 缩略图
-     */
-    private String thumbnail;
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    private String isTop;
-
-    /**
-     * 状态（0已发布，1草稿）
+     * 状态0:正常,1禁用
      */
     private String status;
-
-    /**
-     * 访问量
-     */
-    private Long viewCount;
-
-    /**
-     * 是否允许评论 1是，0否
-     */
-    private String isComment;
 
     /**
      *
