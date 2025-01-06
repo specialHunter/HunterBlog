@@ -64,6 +64,9 @@
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- Springboot 3 加强了错误校验报错提示，@RequestParam 变成了不可省略注解。
+                     可确保使用 -parameters 标志编译代码，从而使参数名称在运行时可用 -->
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
         </plugins>
