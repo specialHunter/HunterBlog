@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author Hunter
@@ -62,9 +63,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         List<Article> articleList = page(page, queryWrapper).getRecords();
 
         // 根据articleList中每个categoryId查询分类名称
-        for (Article article : articleList) {
-            article.setCategoryName(categoryService.getById(article.getCategoryId()).getName());
-        }
+        articleList = articleList.stream()
+                .peek(article -> article.setCategoryName(categoryService.getById(article.getCategoryId()).getName()))
+                .collect(Collectors.toList());
 
         List<ArticleVo> articleVos = BeanCopyUtils.copyBeanList(articleList, ArticleVo.class);
 
