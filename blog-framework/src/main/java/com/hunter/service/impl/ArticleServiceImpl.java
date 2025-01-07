@@ -6,13 +6,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hunter.constants.SystemConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Article;
+import com.hunter.domain.vo.ArticleVo;
 import com.hunter.domain.vo.HotArticleVo;
+import com.hunter.domain.vo.PageVo;
 import com.hunter.mapper.ArticleMapper;
 import com.hunter.service.ArticleService;
 import com.hunter.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hunter
@@ -38,6 +41,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         // bean拷贝，字段名 和 类型 都需要一致，否则无法拷贝
         List<HotArticleVo> articleVos = BeanCopyUtils.copyBeanList(articles, HotArticleVo.class);
         return ResponseResult.okResult(articleVos);
+    }
+
+    @Override
+    public ResponseResult<?> articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Objects.nonNull(categoryId) && categoryId > 0, Article::getCategoryId, categoryId) // 指定分类
+                .eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_RELEASE) // 文章已发布
+                .orderByDesc(Article::getIsTop); // 以 置顶文章 为先进行排序
+
+        // 分页查询
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        List<Article> articleList = page(page, queryWrapper).getRecords();
+        List<ArticleVo> articleVos = BeanCopyUtils.copyBeanList(articleList, ArticleVo.class);
+
+        PageVo pageVo = new PageVo(articleVos, page.getTotal());
+        return ResponseResult.okResult(pageVo);
     }
 
 }

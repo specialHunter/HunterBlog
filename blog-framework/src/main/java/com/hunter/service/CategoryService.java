@@ -11,5 +11,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CategoryService extends IService<Category> {
 
+    /**
+     * 获取分类列表
+     *
+     * @return 分类列表
+     */
     ResponseResult<?> getCategoryList();
 }

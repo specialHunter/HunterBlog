@@ -18,10 +18,18 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 
-    /*@RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Article> test() {
-        return articleService.list();
-    }*/
+    /**
+     * 分页查询指定分类下的文章列表
+     *
+     * @param pageNum 第几页
+     * @param pageSize 一页多少文章
+     * @param categoryId 分类id
+     * @return 文章列表
+     */
+    @RequestMapping(value = "/articleList", method = RequestMethod.GET)
+    public ResponseResult<?> articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        return articleService.articleList(pageNum, pageSize, categoryId);
+    }
 
     /**
      * 查询热门文章

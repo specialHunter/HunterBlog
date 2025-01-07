@@ -18,6 +18,11 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
+    /**
+     * 获取分类列表
+     *
+     * @return 分类列表
+     */
     @RequestMapping(value = "/getCategoryList", method = RequestMethod.GET)
     public ResponseResult<?> getCategoryList() {
         return categoryService.getCategoryList();
