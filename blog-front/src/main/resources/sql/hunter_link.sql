@@ -44,14 +44,14 @@ CREATE TABLE `hunter_link`
 insert into `hunter_link`(`id`, `name`, `logo`, `description`, `address`, `status`, `create_by`, `create_time`,
                           `update_by`, `update_time`, `del_flag`)
 values (1, 'sda',
-        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn1.itc.cn%2Fimg8%2Fwb%2Frecom%2F2016%2F05%2F10%2F146286696706220328.PNG&refer=http%3A%2F%2Fn1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1646205529&t=f942665181eb9b0685db7a6f59d59975',
-        'sda', 'https://www.baidu.com', '1', NULL, '2022-01-13 08:25:47', NULL, '2022-01-13 08:36:14', 0),
+        'https://infinityicon.infinitynewtab.com/user-share-icon/e9b0df13819c1029fdc4287a6a83bf6c.png',
+        'sda', 'https://www.douban.com', '1', NULL, '2022-01-13 08:25:47', NULL, '2022-01-13 08:36:14', 0),
        (2, 'sda',
-        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn1.itc.cn%2Fimg8%2Fwb%2Frecom%2F2016%2F05%2F10%2F146286696706220328.PNG&refer=http%3A%2F%2Fn1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1646205529&t=f942665181eb9b0685db7a6f59d59975',
-        'dada', 'https://www.qq.com', '1', NULL, '2022-01-13 09:06:10', NULL, '2022-01-13 09:07:09', 0),
+        'https://infinityicon.infinitynewtab.com/user-share-icon/0f2ab700f8fff5b6e9ebc7d6a976981f.png',
+        'dada', 'https://www.weibo.com', '1', NULL, '2022-01-13 09:06:10', NULL, '2022-01-13 09:07:09', 0),
        (3, 'sa',
-        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn1.itc.cn%2Fimg8%2Fwb%2Frecom%2F2016%2F05%2F10%2F146286696706220328.PNG&refer=http%3A%2F%2Fn1.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1646205529&t=f942665181eb9b0685db7a6f59d59975',
-        'da', 'https://www.taobao.com', '1', NULL, '2022-01-13 09:23:01', NULL, '2022-01-13 09:23:01', 0);
+        'https://infinityicon.infinitynewtab.com/user-share-icon/d8b62f4d64bda8800b1c788cd5ba3c68.png',
+        'da', 'https://www.bilibili.com', '1', NULL, '2022-01-13 09:23:01', NULL, '2022-01-13 09:23:01', 0);
 
 /*!40101 SET SQL_MODE = @OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS */;
