@@ -31,4 +31,9 @@ public class SystemConstants {
      * 分类状态为正常
      */
     public static final String CATEGORY_NORMAL = "0";
+
+    /**
+     * 友链状态为审核通过
+     */
+    public static final String LINK_APPROVED = "0";
 }
