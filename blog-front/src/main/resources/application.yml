@@ -9,6 +9,9 @@ spring:
     password: 123456.root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 配置json的日期格式
+
 
 mybatis-plus:
   configuration:
