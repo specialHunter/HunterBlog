@@ -11,7 +11,10 @@ import com.hunter.domain.vo.HotArticleVo;
 import com.hunter.domain.vo.PageVo;
 import com.hunter.mapper.ArticleMapper;
 import com.hunter.service.ArticleService;
+import com.hunter.service.CategoryService;
 import com.hunter.utils.BeanCopyUtils;
+import jakarta.annotation.Resource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,10 @@ import java.util.Objects;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         implements ArticleService {
+
+    @Lazy // 延迟加载，解决循环依赖问题（springboot 2.6以上不支持循环依赖service）
+    @Resource
+    private CategoryService categoryService;
 
     @Override
     public ResponseResult<?> hotArticleList() {
@@ -53,6 +60,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         // 分页查询
         Page<Article> page = new Page<>(pageNum, pageSize);
         List<Article> articleList = page(page, queryWrapper).getRecords();
+
+        // 根据articleList中每个categoryId查询分类名称
+        for (Article article : articleList) {
+            article.setCategoryName(categoryService.getById(article.getCategoryId()).getName());
+        }
+
         List<ArticleVo> articleVos = BeanCopyUtils.copyBeanList(articleList, ArticleVo.class);
 
         PageVo pageVo = new PageVo(articleVos, page.getTotal());
