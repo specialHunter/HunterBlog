@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hunter.constants.SystemConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Article;
+import com.hunter.domain.entity.Category;
+import com.hunter.domain.vo.ArticleDetailVo;
 import com.hunter.domain.vo.ArticleVo;
 import com.hunter.domain.vo.HotArticleVo;
 import com.hunter.domain.vo.PageVo;
@@ -71,6 +73,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
         PageVo pageVo = new PageVo(articleVos, page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult<?> getArticleDetail(Long articleId) {
+        Article article = getById(articleId);
+
+        Category category = categoryService.getById(article.getCategoryId());
+        article.setCategoryName(category.getName());
+
+        ArticleDetailVo articleDetail = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+
+        return ResponseResult.okResult(articleDetail);
     }
 
 }

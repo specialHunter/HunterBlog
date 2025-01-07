@@ -3,6 +3,7 @@ package com.hunter.controller;
 import com.hunter.domain.ResponseResult;
 import com.hunter.service.ArticleService;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +40,16 @@ public class ArticleController {
     @RequestMapping(value = "/hotArticleList", method = RequestMethod.GET)
     public ResponseResult<?> hotArticleList() {
         return articleService.hotArticleList();
+    }
+
+    /**
+     * 查询文章详情
+     *
+     * @param articleId 文章id
+     * @return 文章详情
+     */
+    @RequestMapping(value = "/{articleId}", method = RequestMethod.GET)
+    public ResponseResult<?> getArticleDetail(@PathVariable Long articleId) {
+        return articleService.getArticleDetail(articleId);
     }
 }
