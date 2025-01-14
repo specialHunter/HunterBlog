@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // 设置允许跨域的路径，/** 表示所有路径都允许跨域访问
+        registry.addMapping("/**") // 设置允许访问的路径，/** 表示所有路径都允许被跨域访问
                 .allowedOriginPatterns("*") // 设置允许跨域请求的域名，* 接受来自任何域名的请求
                 .allowCredentials(true) // 允许跨域请求携带用户凭证（如 cookies）
                 .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.DELETE.name(),
