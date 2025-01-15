@@ -19,3 +19,8 @@ services:
       - ./blog-front/src/main/resources/sql:/docker-entrypoint-initdb.d # 挂载需要执行的sql脚本所在目录
     ports:
       - "3306:3306" # 对外访问的端口
+  redis:
+    container_name: app_redis
+    image: redis:7.4.2
+    ports:
+      - "6379:6379"
