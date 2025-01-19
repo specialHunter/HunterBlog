@@ -59,11 +59,11 @@
             </dependency>
 
             <!-- 序列化依赖 -->
-            <dependency>
+            <!-- <dependency>
                 <groupId>com.esotericsoftware</groupId>
                 <artifactId>kryo</artifactId>
                 <version>${kryo}</version>
-            </dependency>
+            </dependency> -->
 
         </dependencies>
     </dependencyManagement>

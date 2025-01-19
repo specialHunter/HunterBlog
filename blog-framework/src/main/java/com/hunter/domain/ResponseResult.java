@@ -1,5 +1,7 @@
 package com.hunter.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunter.enums.HttpCodeEnum;
 import lombok.Data;
 
@@ -30,23 +32,13 @@ public class ResponseResult<T> implements Serializable {
      */
     private T data;
 
-    public ResponseResult() {
-        this.code = HttpCodeEnum.SUCCESS.getCode();
-        this.msg = HttpCodeEnum.SUCCESS.getMsg();
-    }
-
-    public ResponseResult(Integer code, String msg, T data) {
+    private ResponseResult(Integer code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
 
-    public ResponseResult(Integer code, T data) {
-        this.code = code;
-        this.data = data;
-    }
-
-    public ResponseResult(Integer code, String msg) {
+    private ResponseResult(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -55,5 +47,17 @@ public class ResponseResult<T> implements Serializable {
         return new ResponseResult<>(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), data);
     }
 
+    public static ResponseResult<?> failed(int code, String msg) {
+        return new ResponseResult<>(code, msg);
+    }
+
+    public String toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException exception) {
+            throw new RuntimeException("序列化ResponseResult出错", exception);
+        }
+    }
 
 }
