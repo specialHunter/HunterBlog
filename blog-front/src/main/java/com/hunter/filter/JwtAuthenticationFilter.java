@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // 解析获取userid
                 userId = JwtUtils.resolveToken(token);
             } catch (JWTDecodeException | TokenExpiredException jwtException) {
-                log.error("解析token失败：{}", jwtException.getMessage());
+                log.error("解析token失败：{}", jwtException.getMessage(), jwtException);
                 response.getWriter()
                         .write(
                                 ResponseResult.failed(HttpStatus.UNAUTHORIZED.value(),

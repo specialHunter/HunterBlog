@@ -15,8 +15,6 @@
     </modules>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mybatis-plus>3.5.9</mybatis-plus>
         <spring-boot-dependencies>3.4.0</spring-boot-dependencies>
@@ -83,8 +81,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <source>17</source>
+                    <target>17</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <!-- Springboot 3 加强了错误校验报错提示，@RequestParam 变成了不可省略注解。
                      可确保使用 -parameters 标志编译代码，从而使参数名称在运行时可用 -->

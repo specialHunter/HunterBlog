@@ -14,8 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -84,7 +88,23 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, JsonUsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailsService) // 自定义用户验证服务
+                .exceptionHandling(configurer -> {
+                            configurer.authenticationEntryPoint(this::onAuthenticationFailure) // 认证失败处理器
+                                    .accessDeniedHandler(this::onAccessDenied); // 已登录，但没有权限访问时的处理器
+                        }
+                )
                 .build();
+    }
+
+    private void onAccessDenied(HttpServletRequest request, HttpServletResponse response,
+                                AccessDeniedException accessDeniedException) throws IOException {
+        log.error("权限不足：{}", accessDeniedException.getMessage(), accessDeniedException);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter writer = response.getWriter();
+        writer.write(
+                ResponseResult.failed(response.getStatus(), accessDeniedException.getMessage())
+                        .toJson());
     }
 
     @Bean
@@ -116,12 +136,20 @@ public class SecurityConfig {
 
     private void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                          AuthenticationException exception) throws IOException {
-        log.error("登录失败：{}", exception.getMessage());
+        log.error("认证失败：{}", exception.getMessage(), exception);
+        String message = null;
+        if (exception instanceof BadCredentialsException badCredentialsException) {
+            message = badCredentialsException.getMessage();
+        } else if (exception instanceof InsufficientAuthenticationException insufficientAuthenticationException) {
+            message = "认证失败，请登录后操作";
+        } else {
+            message = exception.getMessage();
+        }
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write(
-                ResponseResult.failed(response.getStatus(), exception.getMessage())
+                ResponseResult.failed(HttpStatus.UNAUTHORIZED.value(), message)
                         .toJson());
     }
 
