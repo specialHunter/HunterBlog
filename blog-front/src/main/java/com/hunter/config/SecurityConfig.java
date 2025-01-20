@@ -4,6 +4,7 @@ import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.LoginUserVo;
 import com.hunter.filter.JsonUsernamePasswordAuthenticationFilter;
+import com.hunter.filter.JwtAuthenticationFilter;
 import com.hunter.utils.BeanCopyUtils;
 import com.hunter.utils.JwtUtils;
 import jakarta.annotation.Resource;
@@ -28,6 +29,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,14 +50,29 @@ public class SecurityConfig {
     @Resource
     private RedisTemplate<Object, Object> redisTemplate;
 
+    @Resource
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) // 关闭CSRF校验
+                .cors(configurer -> {
+                    CorsConfiguration corsConfig = new CorsConfiguration();
+                    corsConfig.addAllowedOriginPattern("*"); // 允许所有地址跨域访问
+                    corsConfig.setAllowCredentials(true); // 允许携带cookie
+                    corsConfig.addAllowedHeader("*"); // 允许所有请求头
+                    corsConfig.addAllowedMethod("*"); // 允许所有请求方法
+                    corsConfig.addExposedHeader("*"); // 允许所有响应头
+                    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(); // 基于URL的Cors配置源
+                    source.registerCorsConfiguration("/**", corsConfig); // 注册Cors配置，对所有接口都生效
+                    configurer.configurationSource(source); // 将Cors配置源注入到SpringSecurity
+                })
                 // 不使用session
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
+                            .requestMatchers("/link/getAllLink").authenticated() // "/link/getAllLink" 需要认证后才能访问
                             .anyRequest().permitAll(); // 其他所有请求都允许访问
                 })
                 .formLogin(configurer -> {
@@ -64,6 +82,7 @@ public class SecurityConfig {
                 })
                 .addFilterBefore(jsonUsernamePasswordAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, JsonUsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailsService) // 自定义用户验证服务
                 .build();
     }
@@ -73,7 +92,7 @@ public class SecurityConfig {
         JsonUsernamePasswordAuthenticationFilter authenticationFilter =
                 new JsonUsernamePasswordAuthenticationFilter();
         authenticationFilter.setAuthenticationManager(authenticationManager());
-        // 参考 https://www.duidaima.com/Group/Topic/JAVA/10494
+        // 参考 https://www.duidaima.com/Group/Topic/JAVA/10494 , todo: 梳理SpringSecurity处理json请求的流程
         authenticationFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
         authenticationFilter.setFilterProcessesUrl("/login");
         authenticationFilter.setAuthenticationSuccessHandler(this::onAuthenticationSuccess);
@@ -103,7 +122,7 @@ public class SecurityConfig {
         PrintWriter writer = response.getWriter();
         writer.write(
                 ResponseResult.failed(response.getStatus(), exception.getMessage())
-                        .toString());
+                        .toJson());
     }
 
     // 登录成功处理器
@@ -114,7 +133,7 @@ public class SecurityConfig {
         PrintWriter writer = response.getWriter();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        String token = JwtUtils.createJwt(loginUser.toString());
+        String token = JwtUtils.createJwt(loginUser.getUser().getId().toString()); // 根据用户ID生成token
         // 将用户信息存入redis
         redisTemplate.opsForValue().set("login:user:id:" + loginUser.getUser().getId(), loginUser);
         // 将用户信息封装到LoginUserVo中

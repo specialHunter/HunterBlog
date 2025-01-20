@@ -16,8 +16,6 @@ import java.io.InputStream;
 import java.util.Map;
 
 /**
- *
- *
  * @author Hunter
  * @since 2025/1/19
  */
@@ -25,12 +23,13 @@ public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
+        if (MediaType.APPLICATION_JSON_VALUE.equals(request.getContentType())) {
             ObjectMapper mapper = new ObjectMapper();
             UsernamePasswordAuthenticationToken authRequest = null;
             try (InputStream is = request.getInputStream()) {
                 // 通过ObjectMapper读取request中的I/O流，将JSON映射到Map上
-                Map<String, String> authenticationBean = mapper.readValue(is, new TypeReference<>() {});
+                Map<String, String> authenticationBean = mapper.readValue(is, new TypeReference<>() {
+                });
                 authRequest = new UsernamePasswordAuthenticationToken(authenticationBean.get("username"),
                         authenticationBean.get("password"));
             } catch (IOException e) {

@@ -23,7 +23,8 @@ public class RedisConfig {
         // 使用StringRedisSerializer.UTF_8作为key和hash key的序列化器
         template.setKeySerializer(RedisSerializer.string());
         template.setHashKeySerializer(RedisSerializer.string());
-        // 使用GenericJackson2JsonRedisSerializer作为value和hash value的序列化器
+        // 使用GenericJackson2JsonRedisSerializer作为value和hash value的序列化器。
+        // 被序列化的对象，getter方法也会被读取形成property，成为被序列化的一部分
         template.setValueSerializer(RedisSerializer.json());
         template.setHashValueSerializer(RedisSerializer.json());
 

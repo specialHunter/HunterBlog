@@ -1,5 +1,6 @@
 package com.hunter.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,9 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+// 由于redis使用GenericJackson2JsonRedisSerializer作为value和hash value的序列化器。
+// 被序列化的对象，getter方法也会被读取形成property，成为被序列化的一部分。反序列化时，需要忽略这些由方法产生的字段。
+@JsonIgnoreProperties(ignoreUnknown = true) // 忽略未知属性
 public class LoginUser implements UserDetails {
     @Serial
     private static final long serialVersionUID = 9026640040252480961L;
