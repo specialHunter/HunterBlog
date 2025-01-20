@@ -25,9 +25,6 @@ public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        if (!"POST".equals(request.getMethod())) {
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
-        }
         if (request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
             ObjectMapper mapper = new ObjectMapper();
             UsernamePasswordAuthenticationToken authRequest = null;
