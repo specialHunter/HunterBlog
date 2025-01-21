@@ -5,6 +5,7 @@ import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.LoginUserVo;
 import com.hunter.filter.JsonUsernamePasswordAuthenticationFilter;
 import com.hunter.filter.JwtAuthenticationFilter;
+import com.hunter.handler.security.LogoutSuccessHandlerImpl;
 import com.hunter.utils.BeanCopyUtils;
 import com.hunter.utils.JwtUtils;
 import jakarta.annotation.Resource;
@@ -32,6 +33,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -57,6 +59,9 @@ public class SecurityConfig {
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Resource
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -76,7 +81,7 @@ public class SecurityConfig {
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
-                            .requestMatchers("/link/getAllLink").authenticated() // "/link/getAllLink" 需要认证后才能访问
+                            .requestMatchers("/logout", "/link/getAllLink").authenticated()
                             .anyRequest().permitAll(); // 其他所有请求都允许访问
                 })
                 .formLogin(configurer -> {
@@ -84,9 +89,14 @@ public class SecurityConfig {
                             .successHandler(this::onAuthenticationSuccess) // 登录成功处理器
                             .failureHandler(this::onAuthenticationFailure); // 登录失败处理器
                 })
+                .logout(configurer -> {
+                    configurer.logoutUrl("/logout")
+                            .logoutSuccessHandler(logoutSuccessHandler); // 注销成功处理器
+                })
                 .addFilterBefore(jsonUsernamePasswordAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter, JsonUsernamePasswordAuthenticationFilter.class)
+                // 在注销过滤器之前添加JWT过滤器，否则注销无法验证token
+                .addFilterBefore(jwtAuthenticationFilter, LogoutFilter.class)
                 .userDetailsService(userDetailsService) // 自定义用户验证服务
                 .exceptionHandling(configurer -> {
                             configurer.authenticationEntryPoint(this::onAuthenticationFailure) // 认证失败处理器
@@ -162,13 +172,13 @@ public class SecurityConfig {
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String token = JwtUtils.createJwt(loginUser.getUser().getId().toString()); // 根据用户ID生成token
-        // 将用户信息存入redis
+        // 将用户信息存入redis，todo:优化硬编码login:user:id:
         redisTemplate.opsForValue().set("login:user:id:" + loginUser.getUser().getId(), loginUser);
         // 将用户信息封装到LoginUserVo中
         LoginUserVo.UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), LoginUserVo.UserInfoVo.class);
         LoginUserVo loginUserVo = new LoginUserVo(token, userInfoVo);
         writer.write(
-                ResponseResult.okResult(loginUserVo)
+                ResponseResult.success(loginUserVo)
                         .toJson()
         );
     }

@@ -44,7 +44,7 @@ public class ResponseResult<T> implements Serializable {
         this.msg = msg;
     }
 
-    public static <T> ResponseResult<T> okResult(T data) {
+    public static <T> ResponseResult<T> success(T data) {
         return new ResponseResult<>(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), data);
     }
 
@@ -54,6 +54,10 @@ public class ResponseResult<T> implements Serializable {
 
     public static <T> ResponseResult<T> error(int code, String msg) {
         return new ResponseResult<>(code, msg);
+    }
+
+    public static <T> ResponseResult<T> success() {
+        return success(null);
     }
 
     public String toJson() {

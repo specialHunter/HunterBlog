@@ -50,7 +50,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
         // bean拷贝，字段名 和 类型 都需要一致，否则无法拷贝
         List<HotArticleVo> articleVos = BeanCopyUtils.copyBeanList(articles, HotArticleVo.class);
-        return ResponseResult.okResult(articleVos);
+        return ResponseResult.success(articleVos);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         List<ArticleVo> articleVos = BeanCopyUtils.copyBeanList(articleList, ArticleVo.class);
 
         PageVo pageVo = new PageVo(articleVos, page.getTotal());
-        return ResponseResult.okResult(pageVo);
+        return ResponseResult.success(pageVo);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
         ArticleDetailVo articleDetail = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
 
-        return ResponseResult.okResult(articleDetail);
+        return ResponseResult.success(articleDetail);
     }
 
 }

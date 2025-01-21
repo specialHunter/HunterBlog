@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         // 获取请求头中的token
         String authorization = request.getHeader("Authorization"); // 从请求头中获取Authorization字段
-        if (authorization != null && authorization.startsWith("Bearer ")) { // 如果Authorization字段存在且以Bearer开头
+        if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.substring(7); // 截取出token
             String userId = null;
             try {
@@ -68,8 +68,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             // 设置认证信息到SecurityContextHolder中
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-            // 设置与当前http请求相关的详细信息
+                    new UsernamePasswordAuthenticationToken(
+                            loginUser, null, loginUser.getAuthorities());
+            // 设置当前http请求相关的详细信息到SecurityContextHolder中
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }

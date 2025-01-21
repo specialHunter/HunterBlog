@@ -30,7 +30,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
         List<Link> linkList = list(queryWrapper);
 
         List<LinkVo> linkVoList = BeanCopyUtils.copyBeanList(linkList, LinkVo.class);
-        return ResponseResult.okResult(linkVoList);
+        return ResponseResult.success(linkVoList);
     }
 }
 
