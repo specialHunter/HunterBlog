@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunter.enums.HttpCodeEnum;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 @Data
 public class ResponseResult<T> implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = -4627979247168877437L;
     /**
      * 响应码
@@ -43,11 +44,15 @@ public class ResponseResult<T> implements Serializable {
         this.msg = msg;
     }
 
-    public static ResponseResult<?> okResult(Object data) {
+    public static <T> ResponseResult<T> okResult(T data) {
         return new ResponseResult<>(HttpCodeEnum.SUCCESS.getCode(), HttpCodeEnum.SUCCESS.getMsg(), data);
     }
 
-    public static ResponseResult<?> failed(int code, String msg) {
+    public static <T> ResponseResult<T> failed(int code, String msg) {
+        return new ResponseResult<>(code, msg);
+    }
+
+    public static <T> ResponseResult<T> error(int code, String msg) {
         return new ResponseResult<>(code, msg);
     }
 
@@ -59,5 +64,4 @@ public class ResponseResult<T> implements Serializable {
             throw new RuntimeException("序列化ResponseResult出错", exception);
         }
     }
-
 }
