@@ -23,7 +23,8 @@ public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        if (MediaType.APPLICATION_JSON_VALUE.equals(request.getContentType())) {
+        if (MediaType.APPLICATION_JSON_VALUE.equals(request.getContentType())
+                || MediaType.APPLICATION_JSON_UTF8_VALUE.equalsIgnoreCase(request.getContentType())) {
             ObjectMapper mapper = new ObjectMapper();
             UsernamePasswordAuthenticationToken authRequest = null;
             try (InputStream is = request.getInputStream()) {
