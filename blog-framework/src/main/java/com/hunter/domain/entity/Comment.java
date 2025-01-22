@@ -1,6 +1,8 @@
 package com.hunter.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -56,23 +58,27 @@ public class Comment implements Serializable {
     private Long toCommentId;
 
     /**
-     * 
+     * 发表评论的用户id
      */
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
     /**
-     * 
+     * 评论时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
-     * 
+     * 更新评论的用户id
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
     /**
-     * 
+     * 评论更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**
