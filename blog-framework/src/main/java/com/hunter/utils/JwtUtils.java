@@ -31,8 +31,8 @@ public class JwtUtils {
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY); // 对称加密算法
         Calendar calendar = Calendar.getInstance(); // 获取当前时间
         Date now = calendar.getTime(); // 获取当前时间
-        // calendar.add(Calendar.HOUR, 24); // 设置过期时间为24小时
-        calendar.add(Calendar.HOUR, 24); // 设置过期时间为30秒
+        calendar.add(Calendar.HOUR, 24); // 设置过期时间为24小时
+        // calendar.add(Calendar.SECOND, 30); // 设置过期时间为30秒
         return JWT.create()
                 .withJWTId(UUID.randomUUID().toString()) // 将UUID设置为JWT ID
                 .withSubject(userId) // 设置主题，可以是json数据

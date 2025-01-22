@@ -64,6 +64,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         Page<Article> page = new Page<>(pageNum, pageSize);
         List<Article> articleList = page(page, queryWrapper).getRecords();
 
+        // todo: Article类不需要特意添加 需要@TableField(exist = false)注解的属性，直接在ArticleVo里设置即可
         // 根据articleList中每个categoryId查询分类名称
         articleList = articleList.stream()
                 .peek(article -> article.setCategoryName(categoryService.getById(article.getCategoryId()).getName()))
