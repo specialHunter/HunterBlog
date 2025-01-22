@@ -35,7 +35,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         // 查询指定文章id对应的评论
         LambdaQueryWrapper<Comment> queryWrapper = Wrappers.<Comment>lambdaQuery()
                 .eq(Comment::getArticleId, articleId)
-                .eq(Comment::getRootId, -1); // 根评论
+                .eq(Comment::getRootId, -1) // 根评论
+                .orderByAsc(Comment::getCreateTime);
 
         // 分页查询
         Page<Comment> page = new Page<>(pageNum, pageSize);
@@ -44,20 +45,45 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         List<CommentVo> commentVos = BeanCopyUtils.copyBeanList(commentList, CommentVo.class);
         commentVos = commentVos.stream()
                 .peek(commentVo -> {
-                            // 设置评论的用户昵称
-                            commentVo.setUsername(
-                                    userService.getById(commentVo.getCreateBy()).getNickName());
-                            // 被评论的用户id不为-1，表示回复了对应用户id的评论，需要设置被评论的用户昵称
-                            if (commentVo.getToCommentUserId() != -1) {
-                                commentVo.setToCommentUsername(
-                                        userService.getById(commentVo.getToCommentUserId()).getNickName());
-                            }
+                    setNickNameAndToCommentUsername(commentVo);
+                    setChildrenComments(commentVo);
                         }
                 )
                 .collect(Collectors.toList());
 
         PageVo pageVo = new PageVo(commentVos, page.getTotal());
         return ResponseResult.success(pageVo);
+    }
+
+    /**
+     * 设置评论的子评论 【未继续递归子评论】
+     * 如果评论的 根评论的id = 目标评论的id，则为目标评论的子评论
+     * @param commentVo 目标评论vo
+     */
+    private void setChildrenComments(CommentVo commentVo) {
+        List<Comment> children = list(Wrappers.<Comment>lambdaQuery()
+                .eq(Comment::getRootId, commentVo.getId())
+                .orderByAsc(Comment::getCreateTime));
+        List<CommentVo> childrenCommentVos = BeanCopyUtils.copyBeanList(children, CommentVo.class);
+        childrenCommentVos = childrenCommentVos.stream()
+                .peek(this::setNickNameAndToCommentUsername)
+                .collect(Collectors.toList());
+        commentVo.setChildren(childrenCommentVos);
+    }
+
+    /**
+     * 设置 评论的用户昵称 和 被评论的用户昵称
+     * @param commentVo 评论vo
+     */
+    private void setNickNameAndToCommentUsername(CommentVo commentVo) {
+        // 设置评论的用户昵称
+        commentVo.setUsername(
+                userService.getById(commentVo.getCreateBy()).getNickName());
+        // 被评论的用户id不为-1，表示回复了对应用户id的评论，需要设置被评论的用户昵称
+        if (commentVo.getToCommentUserId() != -1) {
+            commentVo.setToCommentUsername(
+                    userService.getById(commentVo.getToCommentUserId()).getNickName());
+        }
     }
 }
 
