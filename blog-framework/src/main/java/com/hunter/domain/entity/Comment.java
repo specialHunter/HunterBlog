@@ -9,7 +9,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 评论表
@@ -67,7 +67,7 @@ public class Comment implements Serializable {
      * 评论时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新评论的用户id
@@ -79,7 +79,7 @@ public class Comment implements Serializable {
      * 评论更新时间
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 删除标志（0代表未删除，1代表已删除）

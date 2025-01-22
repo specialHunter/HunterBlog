@@ -3,7 +3,7 @@ package com.hunter.domain.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -47,7 +47,7 @@ public class CommentVo {
     /**
      * 发表评论的时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 根评论id
