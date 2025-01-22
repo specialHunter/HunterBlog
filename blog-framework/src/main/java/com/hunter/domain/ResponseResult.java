@@ -1,5 +1,6 @@
 package com.hunter.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunter.enums.HttpCodeEnum;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * @since 2024/12/30
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL) // 序列化时，null值不参与序列化
 public class ResponseResult<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = -4627979247168877437L;

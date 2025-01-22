@@ -8,12 +8,15 @@ import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Comment;
 import com.hunter.domain.vo.CommentVo;
 import com.hunter.domain.vo.PageVo;
+import com.hunter.enums.HttpCodeEnum;
+import com.hunter.exception.GlobalException;
 import com.hunter.mapper.CommentMapper;
 import com.hunter.service.CommentService;
 import com.hunter.service.UserService;
 import com.hunter.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,8 +48,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         List<CommentVo> commentVos = BeanCopyUtils.copyBeanList(commentList, CommentVo.class);
         commentVos = commentVos.stream()
                 .peek(commentVo -> {
-                    setNickNameAndToCommentUsername(commentVo);
-                    setChildrenComments(commentVo);
+                            setNickNameAndToCommentUsername(commentVo);
+                            setChildrenComments(commentVo);
                         }
                 )
                 .collect(Collectors.toList());
@@ -55,9 +58,20 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         return ResponseResult.success(pageVo);
     }
 
+    @Override
+    public ResponseResult<?> addComment(Comment comment) {
+        // 评论内容不能为空
+        if (!StringUtils.hasLength(comment.getContent())) {
+            throw new GlobalException(HttpCodeEnum.CONTENT_CANNOT_EMPTY);
+        }
+        save(comment);
+        return ResponseResult.success();
+    }
+
     /**
      * 设置评论的子评论 【未继续递归子评论】
      * 如果评论的 根评论的id = 目标评论的id，则为目标评论的子评论
+     *
      * @param commentVo 目标评论vo
      */
     private void setChildrenComments(CommentVo commentVo) {
@@ -73,6 +87,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
 
     /**
      * 设置 评论的用户昵称 和 被评论的用户昵称
+     *
      * @param commentVo 评论vo
      */
     private void setNickNameAndToCommentUsername(CommentVo commentVo) {

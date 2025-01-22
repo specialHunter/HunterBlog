@@ -81,7 +81,7 @@ public class SecurityConfig {
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
-                            .requestMatchers("/logout").authenticated() // "/logout" 需要认证才能访问
+                            .requestMatchers("/logout", "/comment").authenticated() // "/logout"、"/comment" 需要认证才能访问
                             .anyRequest().permitAll(); // 其他所有请求都允许访问
                 })
                 .formLogin(configurer -> {

@@ -1,5 +1,6 @@
 package com.hunter.exception;
 
+import com.hunter.enums.HttpCodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,4 +21,9 @@ public class GlobalException extends RuntimeException {
     private int code;
 
     private String msg;
+
+    public GlobalException(HttpCodeEnum httpCodeEnum) {
+        code = httpCodeEnum.getCode();
+        msg = httpCodeEnum.getMsg();
+    }
 }

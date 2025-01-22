@@ -6,7 +6,7 @@ package com.hunter.enums;
  * @since 2024/12/30
  */
 public enum HttpCodeEnum {
-    SUCCESS(200, "操作成功");
+    SUCCESS(200, "操作成功"), CONTENT_CANNOT_EMPTY(411, "评论内容不能为空");
 
     int code;
     String msg;

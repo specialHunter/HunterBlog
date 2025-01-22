@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * 注销成功处理器
+ *
  * @author Hunter
  * @since 2025/1/21
  */
