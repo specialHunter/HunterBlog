@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 分类控制器
+ *
  * @author Hunter
  * @since 2025/1/2
  */

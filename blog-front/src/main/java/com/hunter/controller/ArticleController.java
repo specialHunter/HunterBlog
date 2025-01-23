@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 文章控制器
+ *
  * @author Hunter
  * @since 2024/12/30
  */

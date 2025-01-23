@@ -1,7 +1,9 @@
 package com.hunter.service;
 
+import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hunter.domain.vo.UserInfoVo;
 
 /**
 * @author Hunter
@@ -10,4 +12,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
+    /**
+     * 获取当前用户信息
+     *
+     * @return 用户信息
+     */
+    ResponseResult<UserInfoVo> getUserInfo();
 }

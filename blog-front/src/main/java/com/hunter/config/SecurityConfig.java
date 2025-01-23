@@ -3,6 +3,7 @@ package com.hunter.config;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.LoginUserVo;
+import com.hunter.domain.vo.UserInfoVo;
 import com.hunter.filter.JsonUsernamePasswordAuthenticationFilter;
 import com.hunter.filter.JwtAuthenticationFilter;
 import com.hunter.handler.security.LogoutSuccessHandlerImpl;
@@ -81,7 +82,9 @@ public class SecurityConfig {
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
-                            .requestMatchers("/logout", "/comment").authenticated() // "/logout"、"/comment" 需要认证才能访问
+                            .requestMatchers(
+                                    "/logout", "/comment", "/user/userInfo"
+                            ).authenticated() // "/logout"、"/comment"、"/user/userInfo" 需要认证才能访问
                             .anyRequest().permitAll(); // 其他所有请求都允许访问
                 })
                 .formLogin(configurer -> {
@@ -175,7 +178,7 @@ public class SecurityConfig {
         // 将用户信息存入redis，todo:优化硬编码login:user:id:
         redisTemplate.opsForValue().set("login:user:id:" + loginUser.getUser().getId(), loginUser);
         // 将用户信息封装到LoginUserVo中
-        LoginUserVo.UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), LoginUserVo.UserInfoVo.class);
+        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         LoginUserVo loginUserVo = new LoginUserVo(token, userInfoVo);
         writer.write(
                 ResponseResult.success(loginUserVo)
