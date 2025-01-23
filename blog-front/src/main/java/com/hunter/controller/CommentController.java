@@ -1,7 +1,9 @@
 package com.hunter.controller;
 
+import com.hunter.constants.SystemConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Comment;
+import com.hunter.domain.vo.PageVo;
 import com.hunter.service.CommentService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,24 +26,38 @@ public class CommentController {
 
 
     /**
-     * 获取评论列表
+     * 获取文章评论列表
+     *
      * @param articleId 文章id
-     * @param pageNum 页码
-     * @param pageSize 页大小
+     * @param pageNum   页码
+     * @param pageSize  每页数量
      * @return 评论列表
      */
     @GetMapping("/commentList")
-    public ResponseResult<?> getCommentList(long articleId, int pageNum, int pageSize) {
-        return commentService.getCommentList(articleId, pageNum, pageSize);
+    public ResponseResult<PageVo> getCommentList(Long articleId, int pageNum, int pageSize) {
+        return commentService.getCommentList(SystemConstants.ARTICLE_COMMENT, articleId, pageNum, pageSize);
     }
 
     /**
      * 添加评论
+     *
      * @param comment 评论实体
      * @return 添加结果
      */
     @PostMapping
-    public ResponseResult<?> addComment(@RequestBody Comment comment) { // json请求数据需要加@RequestBody注解
+    public <T> ResponseResult<T> addComment(@RequestBody Comment comment) { // json请求数据需要加@RequestBody注解
         return commentService.addComment(comment);
+    }
+
+    /**
+     * 获取友链评论列表
+     *
+     * @param pageNum  页码
+     * @param pageSize 每页数量
+     * @return 友链评论列表
+     */
+    @GetMapping("/linkCommentList")
+    public ResponseResult<PageVo> getLinkCommentList(int pageNum, int pageSize) {
+        return commentService.getCommentList(SystemConstants.LINK_COMMENT, null, pageNum, pageSize);
     }
 }

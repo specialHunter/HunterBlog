@@ -3,6 +3,7 @@ package com.hunter.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Comment;
+import com.hunter.domain.vo.PageVo;
 
 /**
  * @author Hunter
@@ -12,13 +13,13 @@ import com.hunter.domain.entity.Comment;
 public interface CommentService extends IService<Comment> {
     /**
      * 获取评论列表
-     *
+     * @param commentType 评论类型：0：文章评论；1：友链评论
      * @param articleId 文章ID
      * @param pageNum 页码
      * @param pageSize 每页数量
-     * @return 评论列表
+     * @return
      */
-    ResponseResult<?> getCommentList(long articleId, int pageNum, int pageSize);
+    ResponseResult<PageVo> getCommentList(String commentType, Long articleId, int pageNum, int pageSize);
 
     /**
      * 添加评论
@@ -26,5 +27,5 @@ public interface CommentService extends IService<Comment> {
      * @param comment 评论实体
      * @return 添加结果
      */
-    ResponseResult<?> addComment(Comment comment);
+    <T> ResponseResult<T> addComment(Comment comment);
 }

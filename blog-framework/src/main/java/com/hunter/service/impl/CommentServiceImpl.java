@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hunter.constants.SystemConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Comment;
 import com.hunter.domain.vo.CommentVo;
@@ -34,11 +35,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     private UserService userService;
 
     @Override
-    public ResponseResult<?> getCommentList(long articleId, int pageNum, int pageSize) {
-        // 查询指定文章id对应的评论
+    public ResponseResult<PageVo> getCommentList(String commentType, Long articleId, int pageNum, int pageSize) {
+        // 查询指定评论类型、文章id 对应的评论
         LambdaQueryWrapper<Comment> queryWrapper = Wrappers.<Comment>lambdaQuery()
-                .eq(Comment::getArticleId, articleId)
+                .eq(SystemConstants.ARTICLE_COMMENT.equals(commentType), Comment::getArticleId, articleId)
                 .eq(Comment::getRootId, -1) // 根评论
+                .eq(Comment::getType, commentType) // 评论类型
                 .orderByAsc(Comment::getCreateTime);
 
         // 分页查询
@@ -59,7 +61,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     }
 
     @Override
-    public ResponseResult<?> addComment(Comment comment) {
+    public <T> ResponseResult<T> addComment(Comment comment) {
         // 评论内容不能为空
         if (!StringUtils.hasLength(comment.getContent())) {
             throw new GlobalException(HttpCodeEnum.CONTENT_CANNOT_EMPTY);
