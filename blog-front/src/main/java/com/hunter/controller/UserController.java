@@ -5,7 +5,9 @@ import com.hunter.domain.entity.User;
 import com.hunter.domain.vo.UserInfoVo;
 import com.hunter.service.UserService;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +45,17 @@ public class UserController {
     @PutMapping("/userInfo")
     public <T> ResponseResult<T> updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
+    }
+
+    /**
+     * 注册用户
+     *
+     * @param user 用户信息
+     * @return 注册结果
+     * @param <T> 返回类型
+     */
+    @PostMapping("/register")
+    public <T> ResponseResult<T> register(@Valid @RequestBody User user) {
+        return userService.register(user);
     }
 }

@@ -27,4 +27,13 @@ public interface UserService extends IService<User> {
      * @param <T> 返回类型
      */
     <T> ResponseResult<T> updateUserInfo(User user);
+
+    /**
+     * 注册用户
+     *
+     * @param user 用户信息
+     * @return 注册结果
+     * @param <T> 返回类型
+     */
+    <T> ResponseResult<T> register(User user);
 }

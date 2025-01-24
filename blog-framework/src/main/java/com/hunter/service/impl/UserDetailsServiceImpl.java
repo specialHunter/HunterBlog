@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         log.info("loadUserByUsername: {}", username);
 
         LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery()
-                .eq(User::getUserName, username);
+                .eq(User::getUsername, username);
 
         User user = userMapper.selectOne(queryWrapper);
 
