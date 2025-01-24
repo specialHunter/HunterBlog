@@ -59,6 +59,18 @@
             <artifactId>java-jwt</artifactId>
         </dependency>
 
+        <!-- 七牛云存储图片 -->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+        </dependency>
+        <!-- 七牛云依赖的gson，scope为runtime，在编译main目录下的Java类时，编译器无法找到gson库
+             显式声明gson，以便编译器能够找到gson库
+             -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

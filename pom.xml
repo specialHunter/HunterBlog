@@ -19,6 +19,8 @@
         <mybatis-plus>3.5.9</mybatis-plus>
         <spring-boot-dependencies>3.4.0</spring-boot-dependencies>
         <jwt>4.4.0</jwt>
+        <qiniu>7.17.0</qiniu>
+        <gson>2.11.0</gson>
     </properties>
 
     <!-- 依赖版本控制 -->
@@ -62,6 +64,21 @@
                 <artifactId>kryo</artifactId>
                 <version>${kryo}</version>
             </dependency> -->
+
+            <!-- 图片通过七牛云管理 -->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu}</version>
+            </dependency>
+            <!-- 七牛云依赖的gson，scope为runtime，在编译main目录下的Java类时，编译器无法找到gson库
+             显式声明gson，以便编译器能够找到gson库
+             -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

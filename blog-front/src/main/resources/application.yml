@@ -11,11 +11,17 @@ spring:
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss # 配置json的日期格式
+
   data:
     redis:
       host: localhost
       port: 6379
       database: 0
+
+  servlet:
+    multipart:
+      max-file-size: 1MB # 上传的单个文件大小限制
+      max-request-size: 5MB # 整个请求的大小限制，可以包含多个文件
 
 mybatis-plus:
   configuration:
@@ -28,3 +34,8 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto # 主键自增
 
+qiniu:
+  accessKey: "WoiuyZG0_nAw2gJNL8SweTm-DifYzHg24D0FvyZs"
+  secretKey: "8YCp-t5JWb56IHFFgmqvOhOuOb5VzZ0JsaCZ0tkf"
+  bucket: "hunter-blog"
+  domain: "http://sqjel2rqt.hd-bkt.clouddn.com/"
