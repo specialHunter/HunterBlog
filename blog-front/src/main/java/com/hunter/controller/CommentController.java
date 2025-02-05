@@ -1,5 +1,6 @@
 package com.hunter.controller;
 
+import com.hunter.annotation.SystemLog;
 import com.hunter.constants.SystemConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Comment;
@@ -34,6 +35,7 @@ public class CommentController {
      * @return 评论列表
      */
     @GetMapping("/commentList")
+    @SystemLog(businessName = "获取文章评论列表")
     public ResponseResult<PageVo> getCommentList(Long articleId, int pageNum, int pageSize) {
         return commentService.getCommentList(SystemConstants.ARTICLE_COMMENT, articleId, pageNum, pageSize);
     }

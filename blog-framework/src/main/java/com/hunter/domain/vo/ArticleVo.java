@@ -1,14 +1,16 @@
 package com.hunter.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Hunter
  * @since 2025/1/5
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL) // 序列化时，null值不参与序列化
 public class ArticleVo {
     private Long id;
 
@@ -50,6 +52,6 @@ public class ArticleVo {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
 }
