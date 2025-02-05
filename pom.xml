@@ -21,6 +21,7 @@
         <jwt>4.4.0</jwt>
         <qiniu>7.17.0</qiniu>
         <gson>2.11.0</gson>
+        <jackson>2.18.1</jackson>
     </properties>
 
     <!-- 依赖版本控制 -->
@@ -80,6 +81,12 @@
                 <version>${gson}</version>
             </dependency>
 
+            <!-- redis默认的JSON序列化器无法处理LocalDateTime类型的对象 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
