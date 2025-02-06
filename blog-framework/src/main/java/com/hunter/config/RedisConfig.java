@@ -1,7 +1,7 @@
 package com.hunter.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.Resource;
+import com.hunter.utils.ObjectMapperFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -18,9 +18,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @Configuration
 public class RedisConfig {
 
-    @Resource
-    private ObjectMapper objectMapper;
-
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
@@ -32,6 +29,7 @@ public class RedisConfig {
 
         // 使用GenericJackson2JsonRedisSerializer作为value和hash value的序列化器。
         // 被序列化的对象，getter方法也会被读取形成property，成为被序列化的一部分
+        ObjectMapper objectMapper = ObjectMapperFactory.getObjectMapper();
         GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer =
                 new GenericJackson2JsonRedisSerializer(objectMapper);
         template.setValueSerializer(jackson2JsonRedisSerializer);
