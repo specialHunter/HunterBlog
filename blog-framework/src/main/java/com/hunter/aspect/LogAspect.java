@@ -3,7 +3,7 @@ package com.hunter.aspect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hunter.annotation.SystemLog;
-import jakarta.annotation.Resource;
+import com.hunter.utils.ObjectMapperFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,8 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect // 声明一个切面
 @Slf4j
 public class LogAspect {
-    @Resource
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = ObjectMapperFactory.getObjectMapper();
 
     // 将注解SystemLog作为切点，由于SystemLog注解声明用在方法上，所以使用了该注解的方法都会调用该方法
     @Pointcut("@annotation(com.hunter.annotation.SystemLog)")
