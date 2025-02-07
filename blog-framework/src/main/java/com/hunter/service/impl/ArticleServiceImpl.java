@@ -17,6 +17,8 @@ import com.hunter.service.CategoryService;
 import com.hunter.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +37,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     @Lazy // 延迟加载，解决循环依赖问题（springboot 2.6以上不支持循环依赖service）
     @Resource
     private CategoryService categoryService;
+
+    @Resource(name = "customRedisTemplate")
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public ResponseResult<?> hotArticleList() {
@@ -80,6 +85,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     public ResponseResult<?> getArticleDetail(Long articleId) {
         Article article = getById(articleId);
 
+        // 从redis中获取viewCount数据
+        HashOperations<String, String, Number> hashOperations = redisTemplate.opsForHash();
+        Long viewCount =
+                Objects.requireNonNull(hashOperations.get("article:viewCount", articleId.toString())).longValue();
+        article.setViewCount(viewCount);
+
         Category category = categoryService.getById(article.getCategoryId());
         article.setCategoryName(category.getName());
 
@@ -88,6 +99,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         return ResponseResult.success(articleDetail);
     }
 
+    @Override
+    public ResponseResult<?> updateViewCount(Long articleId) {
+        // 将redis中对应文章的浏览量+1，注意key都是String类型存储，需要转换
+        redisTemplate.opsForHash().increment("article:viewCount", articleId.toString(), 1);
+
+        return ResponseResult.success();
+    }
 }
 
 

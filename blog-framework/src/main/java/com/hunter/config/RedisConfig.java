@@ -18,10 +18,11 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @Configuration
 public class RedisConfig {
 
-    @Bean
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory); // 设置连接工厂
+    @Bean("customRedisTemplate")
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        // 设置连接工厂
+        template.setConnectionFactory(redisConnectionFactory);
 
         // 使用StringRedisSerializer.UTF_8作为key和hash key的序列化器
         template.setKeySerializer(RedisSerializer.string());

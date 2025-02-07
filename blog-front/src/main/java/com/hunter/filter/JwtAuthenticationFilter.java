@@ -31,8 +31,8 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Resource
-    private RedisTemplate<Object, Object> redisTemplate;
+    @Resource(name = "customRedisTemplate")
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

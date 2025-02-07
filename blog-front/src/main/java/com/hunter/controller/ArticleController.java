@@ -4,6 +4,7 @@ import com.hunter.domain.ResponseResult;
 import com.hunter.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,5 +54,15 @@ public class ArticleController {
     @RequestMapping(value = "/{articleId}", method = RequestMethod.GET)
     public ResponseResult<?> getArticleDetail(@PathVariable Long articleId) {
         return articleService.getArticleDetail(articleId);
+    }
+
+    /**
+     * 更新文章浏览量
+     * @param articleId 文章id
+     * @return 更新结果
+     */
+    @PutMapping("/updateViewCount/{articleId}")
+    public ResponseResult<?> updateViewCount(@PathVariable Long articleId) {
+        return articleService.updateViewCount(articleId);
     }
 }

@@ -54,8 +54,8 @@ public class SecurityConfig {
     @Resource
     private UserDetailsService userDetailsService;
 
-    @Resource
-    private RedisTemplate<Object, Object> redisTemplate;
+    @Resource(name = "customRedisTemplate")
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
