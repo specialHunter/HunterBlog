@@ -1,6 +1,7 @@
 package com.hunter.cron;
 
 import com.hunter.config.UpdateViewCountConfig;
+import com.hunter.constants.RedisConstants;
 import com.hunter.domain.entity.Article;
 import com.hunter.mapper.ArticleMapper;
 import jakarta.annotation.Resource;
@@ -42,7 +43,8 @@ public class UpdateViewCountCronJob {
         log.info("========== 更新浏览量 ==========");
 
         // 从redis读出浏览量，需要先指定泛型，如果直接调用到entries只能得到Object类型
-        BoundHashOperations<String, String, Number> boundHashOps = redisTemplate.boundHashOps("article:viewCount");
+        BoundHashOperations<String, String, Number> boundHashOps =
+                redisTemplate.boundHashOps(RedisConstants.ARTICLE_VIEW_COUNT);
         Map<String, Number> viewCountMap = boundHashOps.entries();
         assert viewCountMap != null;
         List<Article> articleList = viewCountMap.entrySet()
@@ -51,7 +53,7 @@ public class UpdateViewCountCronJob {
                         entry.getValue().longValue()))
                 .toList();
 
-        updateViewCountConfig.setUpdateViewCount(true);
+        updateViewCountConfig.setIsUpdateViewCount(true);
         // 更新到数据库
         // todo: 文章的浏览量 是定时任务更新的，updateBy字段应该单纯地作为文章本身的更新数据，
         //  浏览量的更新不应该体现在updateBy和updateTime字段上，MyMetaObjectHandler应该单独处理浏览量的更新

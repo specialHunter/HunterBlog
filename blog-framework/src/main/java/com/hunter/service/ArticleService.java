@@ -19,7 +19,7 @@ public interface ArticleService extends IService<Article> {
     ResponseResult<?> hotArticleList();
 
     /**
-     * 获取分类列表
+     * 获取文章列表
      *
      * @param pageNum 第几页
      * @param pageSize 一页多少文章
