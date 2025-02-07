@@ -1,5 +1,6 @@
 package com.hunter.runner;
 
+import com.hunter.constants.RedisConstants;
 import com.hunter.domain.entity.Article;
 import com.hunter.mapper.ArticleMapper;
 import jakarta.annotation.Resource;
@@ -38,7 +39,7 @@ public class ViewCountRunner implements CommandLineRunner {
         Map<String, Long> viewCountMap = articles.stream()
                 .collect(Collectors.toMap(article -> article.getId().toString(), Article::getViewCount));
 
-        // 将id、浏览量存入redis，todo: 优化硬编码article:viewCount
-        redisTemplate.opsForHash().putAll("article:viewCount", viewCountMap);
+        // 将id、浏览量存入redis
+        redisTemplate.opsForHash().putAll(RedisConstants.ARTICLE_VIEW_COUNT, viewCountMap);
     }
 }

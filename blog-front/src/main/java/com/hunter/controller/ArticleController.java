@@ -57,7 +57,7 @@ public class ArticleController {
     }
 
     /**
-     * 更新文章浏览量
+     * 更新指定文章的浏览量
      * @param articleId 文章id
      * @return 更新结果
      */

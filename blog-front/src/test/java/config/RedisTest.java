@@ -2,6 +2,7 @@ package config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hunter.HunterBlogApplication;
+import com.hunter.constants.RedisConstants;
 import com.hunter.domain.entity.Article;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
@@ -28,9 +29,10 @@ public class RedisTest {
         map.put("1", 1L);
         map.put("2", 12345678956776L);
 
-        redisTemplate.opsForHash().putAll("test:article:viewCount", map);
+        redisTemplate.opsForHash().putAll(RedisConstants.ARTICLE_VIEW_COUNT, map);
 
-        BoundHashOperations<String, String, Number> boundHashOps = redisTemplate.boundHashOps("test:article:viewCount");
+        BoundHashOperations<String, String, Number> boundHashOps =
+                redisTemplate.boundHashOps(RedisConstants.ARTICLE_VIEW_COUNT);
         Map<String, Number> viewCountMap = boundHashOps.entries();
         assert viewCountMap != null;
         List<Article> articleList = viewCountMap.entrySet()

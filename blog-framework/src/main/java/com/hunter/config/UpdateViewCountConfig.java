@@ -20,7 +20,7 @@ public class UpdateViewCountConfig {
         return isUpdateViewCount;
     }
 
-    public void setUpdateViewCount(boolean updateViewCount) {
-        isUpdateViewCount = updateViewCount;
+    public void setIsUpdateViewCount(boolean isUpdateViewCount) {
+        this.isUpdateViewCount = isUpdateViewCount;
     }
 }

@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL) // 序列化时，null值不参与序列化
 public class ArticleVo {
+    /**
+     * 文章id
+     */
     private Long id;
 
     /**
