@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,7 +18,14 @@ import java.time.LocalDateTime;
  */
 @TableName(value = "hunter_article")
 @Data
+@NoArgsConstructor
 public class Article implements Serializable {
+
+    public Article(Long id, Long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

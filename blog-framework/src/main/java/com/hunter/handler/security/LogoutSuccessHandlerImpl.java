@@ -26,8 +26,8 @@ import java.io.PrintWriter;
 @Component
 @Slf4j
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
-    @Resource
-    private RedisTemplate<Object, Object> redisTemplate;
+    @Resource(name = "customRedisTemplate")
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
