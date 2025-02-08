@@ -4,6 +4,7 @@ import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.User;
 import com.hunter.domain.vo.UserInfoVo;
 import com.hunter.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
+@Tag(name = "用户模块", description = "用户相关接口")
 public class UserController {
     @Resource
     private UserService userService;

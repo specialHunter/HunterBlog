@@ -13,16 +13,18 @@ import java.time.LocalDateTime;
 
 /**
  * 评论表
+ *
+ * @author Hunter
  * @TableName hunter_comment
  */
-@TableName(value ="hunter_comment")
+@TableName(value = "hunter_comment")
 @Data
 public class Comment implements Serializable {
     @Serial
     private static final long serialVersionUID = -3793762433976563651L;
 
     /**
-     * 
+     * 评论id
      */
     @TableId(type = IdType.AUTO)
     private Long id;

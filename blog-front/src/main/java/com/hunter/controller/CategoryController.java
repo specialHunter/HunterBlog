@@ -2,6 +2,7 @@ package com.hunter.controller;
 
 import com.hunter.domain.ResponseResult;
 import com.hunter.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/category")
+@Tag(name = "分类模块", description = "分类相关接口")
 public class CategoryController {
 
     @Resource

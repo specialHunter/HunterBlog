@@ -2,6 +2,7 @@ package com.hunter.controller;
 
 import com.hunter.domain.ResponseResult;
 import com.hunter.service.ArticleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/article")
+@Tag(name = "文章模块", description = "文章相关接口")
 public class ArticleController {
     @Resource
     private ArticleService articleService;
