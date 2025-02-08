@@ -1,5 +1,6 @@
 package com.hunter.config;
 
+import com.hunter.constants.RedisConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.LoginUserVo;
@@ -175,8 +176,8 @@ public class SecurityConfig {
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String token = JwtUtils.createJwt(loginUser.getUser().getId().toString()); // 根据用户ID生成token
-        // 将用户信息存入redis，todo:优化硬编码login:user:id:
-        redisTemplate.opsForValue().set("login:user:id:" + loginUser.getUser().getId(), loginUser);
+        // 将用户信息存入redis
+        redisTemplate.opsForValue().set(RedisConstants.LOGIN_USER_ID + loginUser.getUser().getId(), loginUser);
         // 将用户信息封装到LoginUserVo中
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         LoginUserVo loginUserVo = new LoginUserVo(token, userInfoVo);
