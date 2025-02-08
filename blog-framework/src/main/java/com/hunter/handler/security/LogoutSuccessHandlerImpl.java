@@ -1,5 +1,6 @@
 package com.hunter.handler.security;
 
+import com.hunter.constants.RedisConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import jakarta.annotation.Resource;
@@ -46,8 +47,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         } else {
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
             // 删除redis中存储的用户信息
-            // todo:优化硬编码login:user:id:
-            redisTemplate.delete("login:user:id:" + loginUser.getUser().getId());
+            redisTemplate.delete(RedisConstants.LOGIN_USER_ID + loginUser.getUser().getId());
             writer.write(
                     ResponseResult.success().toJson()
             );

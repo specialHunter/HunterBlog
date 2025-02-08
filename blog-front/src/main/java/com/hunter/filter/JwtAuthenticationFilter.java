@@ -2,6 +2,7 @@ package com.hunter.filter;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.hunter.constants.RedisConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import com.hunter.utils.JwtUtils;
@@ -55,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
             // 从redis中获取用户信息
-            LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get("login:user:id:" + userId);
+            LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(RedisConstants.LOGIN_USER_ID + userId);
             // 获取不到用户信息
             if (loginUser == null) {
                 log.error("redis中没有用户信息");
