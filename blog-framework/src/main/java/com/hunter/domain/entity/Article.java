@@ -1,6 +1,7 @@
 package com.hunter.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -77,7 +78,7 @@ public class Article implements Serializable {
     private String status;
 
     /**
-     * 访问量
+     * 访问量 todo: 将浏览量单独分表，优化查询，同时避免 文章的更新字段 在浏览量更新时特殊处理的逻辑
      */
     private Long viewCount;
 
@@ -101,13 +102,13 @@ public class Article implements Serializable {
     /**
      * 更新人
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT, updateStrategy = FieldStrategy.NOT_NULL)
     private Long updateBy;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT, updateStrategy = FieldStrategy.NOT_NULL)
     private LocalDateTime updateTime;
 
     /**
