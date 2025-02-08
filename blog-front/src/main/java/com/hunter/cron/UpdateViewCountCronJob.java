@@ -53,10 +53,11 @@ public class UpdateViewCountCronJob {
                         entry.getValue().longValue()))
                 .toList();
 
+        // 设置 是否为更新浏览量操作 的标识
         updateViewCountConfig.setIsUpdateViewCount(true);
         // 更新到数据库
-        // todo: 文章的浏览量 是定时任务更新的，updateBy字段应该单纯地作为文章本身的更新数据，
-        //  浏览量的更新不应该体现在updateBy和updateTime字段上，MyMetaObjectHandler应该单独处理浏览量的更新
         articleMapper.updateById(articleList);
+        // 重置标识
+        updateViewCountConfig.setIsUpdateViewCount(false);
     }
 }

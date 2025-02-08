@@ -57,14 +57,12 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        // 如果不是更新文章浏览量，就自动自动填充 update_by、update_time 字段
+        // 如果不是更新文章浏览量，就自动填充 update_by、update_time 字段
         if (!updateViewCountConfig.isUpdateViewCount()) {
             Long userId = getUserId();
             LocalDateTime dateTime = LocalDateTime.now();
             this.strictUpdateFill(metaObject, "updateBy", Long.class, userId);
             this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, dateTime);
-            // 标志位恢复默认值
-            updateViewCountConfig.setUpdateViewCount(false);
         }
     }
 }
