@@ -14,7 +14,12 @@ public class RedisConstants {
     public static final String ARTICLE_VIEW_COUNT = "article:viewCount";
 
     /**
-     * 登录用户的id
+     * 前台登录用户的id
      */
-    public static final String LOGIN_USER_ID = "login:user:id:";
+    public static final String FRONT_LOGIN_USER_ID = "front:login:user:id:";
+
+    /**
+     * 后台登录用户的id
+     */
+    public static final String ADMIN_LOGIN_USER_ID = "admin:login:user:id:";
 }

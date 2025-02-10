@@ -47,7 +47,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         } else {
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
             // 删除redis中存储的用户信息
-            redisTemplate.delete(RedisConstants.LOGIN_USER_ID + loginUser.getUser().getId());
+            redisTemplate.delete(RedisConstants.FRONT_LOGIN_USER_ID + loginUser.getUser().getId());
             writer.write(
                     ResponseResult.success().toJson()
             );

@@ -82,10 +82,11 @@ public class SecurityConfig {
                 // 不使用session
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
-                            .requestMatchers(
-                                    "/logout", "/comment", "/user/userInfo", "/upload"
-                            ).authenticated() // 需要认证才能访问的请求
+                    auth
+                            // .requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
+                            // .requestMatchers(
+                            //         "/logout", "/comment", "/user/userInfo", "/upload"
+                            // ).authenticated() // 需要认证才能访问的请求
                             .anyRequest().permitAll(); // 其他所有请求都允许访问
                 })
                 .formLogin(configurer -> {

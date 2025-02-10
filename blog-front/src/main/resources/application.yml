@@ -3,6 +3,10 @@ server:
   port: 7777
 
 spring:
+  profiles:
+    # 获取framework模块中的application-common.yml配置
+    active: common
+
   datasource: # 数据源
     url: jdbc:mysql://localhost:3306/hunter_blog
     username: root
@@ -33,9 +37,3 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto # 主键自增
-
-qiniu:
-  accessKey: "WoiuyZG0_nAw2gJNL8SweTm-DifYzHg24D0FvyZs"
-  secretKey: "8YCp-t5JWb56IHFFgmqvOhOuOb5VzZ0JsaCZ0tkf"
-  bucket: "hunter-blog"
-  domain: "http://sqjel2rqt.hd-bkt.clouddn.com/"
