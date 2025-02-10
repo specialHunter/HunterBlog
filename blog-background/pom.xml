@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>blog-admin</artifactId>
+    <artifactId>blog-background</artifactId>
 
     <dependencies>
         <!-- 依赖公共模块 -->

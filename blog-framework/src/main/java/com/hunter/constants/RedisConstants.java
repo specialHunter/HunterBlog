@@ -21,5 +21,5 @@ public class RedisConstants {
     /**
      * 后台登录用户的id
      */
-    public static final String ADMIN_LOGIN_USER_ID = "admin:login:user:id:";
+    public static final String BACKGROUND_LOGIN_USER_ID = "background:login:user:id:";
 }

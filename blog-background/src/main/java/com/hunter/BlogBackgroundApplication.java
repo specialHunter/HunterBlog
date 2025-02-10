@@ -13,9 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 // 扫描 mapper 包，将 mapper 注入到 Spring 容器中
 @MapperScan("com.hunter.mapper")
-public class BlogAdminApplication {
+public class BlogBackgroundApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BlogAdminApplication.class, args);
+        SpringApplication.run(BlogBackgroundApplication.class, args);
     }
 }

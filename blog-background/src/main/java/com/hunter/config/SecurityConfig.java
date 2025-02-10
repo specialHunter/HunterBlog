@@ -4,11 +4,9 @@ import com.hunter.constants.RedisConstants;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.LoginUserVo;
-import com.hunter.domain.vo.UserInfoVo;
 import com.hunter.filter.JsonUsernamePasswordAuthenticationFilter;
 import com.hunter.filter.JwtAuthenticationFilter;
 import com.hunter.handler.security.LogoutSuccessHandlerImpl;
-import com.hunter.utils.BeanCopyUtils;
 import com.hunter.utils.JwtUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -83,14 +81,15 @@ public class SecurityConfig {
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth
-                            // .requestMatchers("/login").anonymous()// "/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
+                            // "/user/login" 允许匿名访问（没有经过身份验证），已登录用户无法访问
+                            .requestMatchers("/user/login").anonymous()
                             // .requestMatchers(
                             //         "/logout", "/comment", "/user/userInfo", "/upload"
                             // ).authenticated() // 需要认证才能访问的请求
-                            .anyRequest().permitAll(); // 其他所有请求都允许访问
+                            .anyRequest().authenticated(); // 其他所有请求都需要认证才能访问
                 })
                 .formLogin(configurer -> {
-                    configurer.loginProcessingUrl("/login") // 登录请求处理url
+                    configurer.loginProcessingUrl("/user/login") // 后台登录请求处理url
                             .successHandler(this::onAuthenticationSuccess) // 登录成功处理器
                             .failureHandler(this::onAuthenticationFailure); // 登录失败处理器
                 })
@@ -176,12 +175,12 @@ public class SecurityConfig {
         PrintWriter writer = response.getWriter();
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        String token = JwtUtils.createJwt(loginUser.getUser().getId().toString()); // 根据用户ID生成token
+        // 根据用户ID生成token
+        String token = JwtUtils.createJwt(loginUser.getUser().getId().toString());
         // 将用户信息存入redis
-        redisTemplate.opsForValue().set(RedisConstants.FRONT_LOGIN_USER_ID + loginUser.getUser().getId(), loginUser);
-        // 将用户信息封装到LoginUserVo中
-        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
-        LoginUserVo loginUserVo = new LoginUserVo(token, userInfoVo);
+        redisTemplate.opsForValue().set(RedisConstants.BACKGROUND_LOGIN_USER_ID + loginUser.getUser().getId(), loginUser);
+        // 返回token
+        LoginUserVo loginUserVo = new LoginUserVo(token, null);
         writer.write(
                 ResponseResult.success(loginUserVo)
                         .toJson()
