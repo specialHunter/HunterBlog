@@ -1,0 +1,5 @@
+qiniu:
+  accessKey: "WoiuyZG0_nAw2gJNL8SweTm-DifYzHg24D0FvyZs"
+  secretKey: "8YCp-t5JWb56IHFFgmqvOhOuOb5VzZ0JsaCZ0tkf"
+  bucket: "hunter-blog"
+  domain: "http://sqjel2rqt.hd-bkt.clouddn.com/"

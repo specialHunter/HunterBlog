@@ -1,0 +1,34 @@
+server:
+  # 前端模板调用的端口为8989，故保持一致
+  port: 8989
+
+spring:
+  profiles:
+    # 获取framework模块中的application-common.yml配置
+    active: common
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/hunter_blog
+    username: root
+    password: 123456.root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  servlet:
+    multipart:
+      # 上传的单个文件大小限制
+      max-file-size: 20MB
+      # 整个请求的大小限制，可以包含多个文件
+      max-request-size: 20MB
+
+mybatis-plus:
+  configuration:
+    # 日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 逻辑删除的字段名，查询时会自动忽略已被逻辑删除的行
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      # 主键自增
+      id-type: auto

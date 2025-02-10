@@ -3,6 +3,8 @@ package com.hunter.domain.vo;
 import lombok.Data;
 
 /**
+ * 用户信息VO
+ *
  * @author Hunter
  * @since 2025/1/23
  */

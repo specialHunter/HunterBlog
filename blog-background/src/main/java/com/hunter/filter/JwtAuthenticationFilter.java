@@ -56,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
             // 从redis中获取用户信息
-            LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(RedisConstants.FRONT_LOGIN_USER_ID + userId);
+            LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(RedisConstants.BACKGROUND_LOGIN_USER_ID + userId);
             // 获取不到用户信息
             if (loginUser == null) {
                 log.error("redis中没有用户信息");
