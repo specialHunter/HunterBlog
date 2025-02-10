@@ -2,6 +2,7 @@ package com.hunter.controller;
 
 import com.hunter.domain.ResponseResult;
 import com.hunter.service.UploadService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/upload")
+@Tag(name = "图片上传", description = "图片上传接口")
 public class UploadController {
     @Resource
     private UploadService uploadService;

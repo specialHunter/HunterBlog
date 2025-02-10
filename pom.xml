@@ -22,6 +22,7 @@
         <qiniu>7.17.0</qiniu>
         <gson>2.11.0</gson>
         <jackson>2.18.1</jackson>
+        <springdoc>2.8.4</springdoc>
     </properties>
 
     <!-- 依赖版本控制 -->
@@ -86,6 +87,13 @@
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson}</version>
+            </dependency>
+
+            <!-- 自动生成API文档 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
