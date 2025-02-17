@@ -46,4 +46,24 @@ public class SystemConstants {
      * 评论类型为友链评论
      */
     public static final String LINK_COMMENT = "1";
+
+    /**
+     * 菜单类型：菜单
+     */
+    public static final String MENU = "C";
+
+    /**
+     * 菜单类型：按钮
+     */
+    public static final String BUTTON = "F";
+
+    /**
+     * 菜单状态为 正常
+     */
+    public static final String MENU_STATUS_NORMAL = "0";
+
+    /**
+     * 管理员角色
+     */
+    public static final String ROLE_ADMIN = "admin";
 }
