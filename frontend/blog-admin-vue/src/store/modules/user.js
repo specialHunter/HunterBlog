@@ -31,13 +31,13 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.userName.trim()
+      const username = userInfo.username.trim()
       const password = userInfo.password
       const code = userInfo.code
       const uuid = userInfo.uuid
       return new Promise((resolve, reject) => {
         login(username, password, code, uuid).then(res => {
-          setToken(res.token)
+          setToken("Bearer " + res.token)
           commit('SET_TOKEN', res.token)
           resolve()
         }).catch(error => {
@@ -58,7 +58,7 @@ const user = {
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
-          commit('SET_NAME', user.userName)
+          commit('SET_NAME', user.username)
           commit('SET_AVATAR', avatar)
           resolve(res)
         }).catch(error => {
