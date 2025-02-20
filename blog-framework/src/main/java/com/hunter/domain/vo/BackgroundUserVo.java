@@ -27,9 +27,9 @@ public class BackgroundUserVo {
     private List<String> roles;
 
     /**
-     * 用户信息Vo
+     * 用户信息Vo，属性命名与前端保持一致，否则前端后续跳转有问题
      */
-    private UserInfoVo userInfoVo;
+    private UserInfoVo user;
 
 
 }
