@@ -1,6 +1,8 @@
 package com.hunter.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -27,23 +29,27 @@ public class Tag {
     private String name;
 
     /**
-     *
+     * 创建标签的用户id
      */
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
     /**
-     *
+     * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
-     *
+     * 更新标签的用户id
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
     /**
-     *
+     * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**
