@@ -3,6 +3,7 @@ package com.hunter.controller;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.BackgroundUserVo;
+import com.hunter.domain.vo.RoutersVo;
 import com.hunter.domain.vo.UserInfoVo;
 import com.hunter.service.MenuService;
 import com.hunter.service.RoleService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
+ * 基于角色的访问控制
+ *
  * @author Hunter
  * @since 2025/2/10
  */
@@ -48,5 +51,16 @@ public class RoleBasedAccessController {
         // 封装数据
         BackgroundUserVo backgroundUserVo = new BackgroundUserVo(perms, roles, userInfoVo);
         return ResponseResult.success(backgroundUserVo);
+    }
+
+    /**
+     * 获取当前用户能访问的菜单数据
+     *
+     * @return 菜单树
+     */
+    @GetMapping("/getRouters")
+    public ResponseResult<RoutersVo> getRouters() {
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return menuService.getMenuTreeByUserId(loginUser.getUser().getId());
     }
 }

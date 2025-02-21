@@ -9,9 +9,9 @@
           :inline="true"
           label-width="68px"
         >
-          <el-form-item label="用户名称" prop="userName">
+          <el-form-item label="用户名称" prop="username">
             <el-input
-              v-model="queryParams.userName"
+              v-model="queryParams.username"
               placeholder="请输入用户名称"
               clearable
               size="small"
@@ -81,7 +81,7 @@
         <el-table :data="userList" style="width: 100%" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" />
           <el-table-column prop="id" label="用户编号" align="center" />
-          <el-table-column prop="userName" label="用户名称" align="center" />
+          <el-table-column prop="username" label="用户名称" align="center" />
           <el-table-column prop="nickName" label="用户昵称" align="center" />
           <el-table-column prop="phonenumber" label="手机号码" align="center" />
           <el-table-column prop="status" label="状态" align="center">
@@ -168,10 +168,10 @@
             <el-form-item
               v-if="form.id == undefined"
               label="用户名称"
-              prop="userName"
+              prop="username"
             >
               <el-input
-                v-model="form.userName"
+                v-model="form.username"
                 placeholder="请输入用户名称"
                 maxlength="30"
               />
@@ -259,7 +259,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userName: undefined,
+        username: undefined,
         phonenumber: undefined,
         status: undefined
       },
@@ -268,7 +268,7 @@ export default {
       open: false,
       // 表单校验
       rules: {
-        userName: [
+        username: [
           { required: true, message: '用户名称不能为空', trigger: 'blur' },
           {
             min: 2,
@@ -354,7 +354,7 @@ export default {
     handleStatusChange(row) {
       const text = row.status === '0' ? '启用' : '停用'
       this.$modal
-        .confirm('确认要"' + text + '""' + row.userName + '"用户吗？')
+        .confirm('确认要"' + text + '""' + row.username + '"用户吗？')
         .then(function() {
           return changeUserStatus(row.id, row.status)
         })
@@ -382,7 +382,7 @@ export default {
     reset() {
       this.form = {
         id: undefined,
-        userName: undefined,
+        username: undefined,
         nickName: undefined,
         password: undefined,
         phonenumber: undefined,

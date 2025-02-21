@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
 * @author Hunter
@@ -22,7 +23,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
     @Override
     public List<String> getRolesByUserId(Long userId) {
         // 如果是管理员，返回的角色集合中，只包含管理员角色（以业务逻辑规定为准）
-        if (userId == 1L) {
+        if (Objects.equals(userId, 1L)) {
             List<String> roles = new ArrayList<>();
             roles.add(SystemConstants.ROLE_ADMIN);
             return roles;

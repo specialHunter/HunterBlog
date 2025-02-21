@@ -12,15 +12,15 @@
         <h3 class="title">博客管理系统</h3>
       </div>
 
-      <el-form-item prop="userName">
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="userName"
-          v-model="loginForm.userName"
+          ref="username"
+          v-model="loginForm.username"
           placeholder="Username"
-          name="userName"
+          name="username"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -57,7 +57,7 @@
       >登录</el-button>
 
       <div class="tips">
-        <span style="margin-right: 20px">userName: 用户名</span>
+        <span style="margin-right: 20px">username: 用户名</span>
         <span> password: 密码</span>
       </div>
     </el-form>
@@ -86,11 +86,11 @@ export default {
     }
     return {
       loginForm: {
-        userName: '',
+        username: '',
         password: ''
       },
       loginRules: {
-        userName: [
+        username: [
           { required: true, trigger: 'blur', validator: validateUsername }
         ],
         password: [

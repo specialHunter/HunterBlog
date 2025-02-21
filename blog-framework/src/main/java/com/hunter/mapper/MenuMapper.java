@@ -2,6 +2,7 @@ package com.hunter.mapper;
 
 import com.hunter.domain.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hunter.domain.vo.MenuVo;
 
 import java.util.List;
 
@@ -20,6 +21,21 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return 权限标识集合
      */
     List<String> getPermsByUserId(Long userId);
+
+    /**
+     * 查询所有菜单
+     *
+     * @return 菜单列表
+     */
+    List<MenuVo> getAllMenus();
+
+    /**
+     * 根据用户ID查询菜单列表
+     *
+     * @param userId userId
+     * @return 菜单列表
+     */
+    List<MenuVo> getMenusByUserId(Long userId);
 }
 
 

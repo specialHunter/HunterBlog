@@ -44,4 +44,47 @@
           AND m.status = '0'
           AND m.del_flag = '0'
     </select>
+
+    <select id="getAllMenus" resultType="com.hunter.domain.vo.MenuVo">
+        SELECT DISTINCT id,
+                        parent_id,
+                        menu_name,
+                        path,
+                        component,
+                        visible,
+                        status,
+                        IFNULL(perms, '') AS perms,
+                        is_frame,
+                        menu_type,
+                        icon,
+                        order_num,
+                        create_time
+        FROM sys_menu
+        WHERE menu_type IN ('C', 'M')
+          AND status = '0'
+          AND del_flag = '0'
+    </select>
+
+    <select id="getMenusByUserId" resultType="com.hunter.domain.vo.MenuVo">
+        SELECT DISTINCT m.id,
+                        m.parent_id,
+                        m.menu_name,
+                        m.path,
+                        m.component,
+                        m.visible,
+                        m.status,
+                        IFNULL(m.perms, '') AS perms,
+                        m.is_frame,
+                        m.menu_type,
+                        m.icon,
+                        m.order_num,
+                        m.create_time
+        FROM sys_user_role ur
+                 LEFT JOIN sys_role_menu rm ON ur.role_id = rm.role_id
+                 LEFT JOIN sys_menu m ON rm.menu_id = m.id
+        WHERE ur.user_id = #{userId}
+          AND m.menu_type IN ('C', 'M')
+          AND m.status = '0'
+          AND m.del_flag = '0'
+    </select>
 </mapper>

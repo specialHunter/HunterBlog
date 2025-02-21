@@ -126,7 +126,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userName: undefined,
+        username: undefined,
         phonenumber: undefined,
         status: undefined
       },
