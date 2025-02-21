@@ -1,14 +1,13 @@
 package com.hunter.controller;
 
 import com.hunter.domain.ResponseResult;
-import com.hunter.domain.entity.Tag;
+import com.hunter.domain.dto.TagListDto;
+import com.hunter.domain.vo.PageVo;
 import com.hunter.service.TagService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 标签控制器
@@ -22,9 +21,15 @@ public class TagContoller {
     @Resource
     private TagService tagService;
 
+    /**
+     * 获取标签列表
+     *
+     * @param pageNum 第几页
+     * @param pageSize 页大小
+     * @return 标签列表
+     */
     @GetMapping("/list")
-    public ResponseResult<List<Tag>> getTagList() {
-        List<Tag> tagList = tagService.list();
-        return ResponseResult.success(tagList);
+    public ResponseResult<PageVo> getTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto) {
+        return tagService.getTagList(pageNum, pageSize, tagListDto);
     }
 }

@@ -1,7 +1,10 @@
 package com.hunter.service;
 
+import com.hunter.domain.ResponseResult;
+import com.hunter.domain.dto.TagListDto;
 import com.hunter.domain.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hunter.domain.vo.PageVo;
 
 /**
  * @author Hunter
@@ -10,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TagService extends IService<Tag> {
 
+    /**
+     * 获取标签列表
+     *
+     * @param pageNum    第几页
+     * @param pageSize   页大小
+     * @param tagListDto 条件查询
+     * @return 标签列表
+     */
+    ResponseResult<PageVo> getTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
 }
