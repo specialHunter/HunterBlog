@@ -94,14 +94,15 @@ public class SecurityConfig {
                             .failureHandler(this::onAuthenticationFailure); // 登录失败处理器
                 })
                 .logout(configurer -> {
-                    configurer.logoutUrl("/logout")
+                    configurer.logoutUrl("/user/logout")
                             .logoutSuccessHandler(logoutSuccessHandler); // 注销成功处理器
                 })
                 .addFilterBefore(jsonUsernamePasswordAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class)
                 // 在注销过滤器之前添加JWT过滤器，否则注销无法验证token
                 .addFilterBefore(jwtAuthenticationFilter, LogoutFilter.class)
-                .userDetailsService(userDetailsService) // 自定义用户验证服务
+                // 自定义用户验证服务
+                .userDetailsService(userDetailsService)
                 .exceptionHandling(configurer -> {
                             configurer.authenticationEntryPoint(this::onAuthenticationFailure) // 认证失败处理器
                                     .accessDeniedHandler(this::onAccessDenied); // 已登录，但没有权限访问时的处理器
@@ -128,7 +129,7 @@ public class SecurityConfig {
         authenticationFilter.setAuthenticationManager(authenticationManager());
         // 参考 https://www.duidaima.com/Group/Topic/JAVA/10494 , todo: 梳理SpringSecurity处理json请求的流程
         authenticationFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
-        authenticationFilter.setFilterProcessesUrl("/login");
+        authenticationFilter.setFilterProcessesUrl("/user/login");
         authenticationFilter.setAuthenticationSuccessHandler(this::onAuthenticationSuccess);
         authenticationFilter.setAuthenticationFailureHandler(this::onAuthenticationFailure);
         return authenticationFilter;
@@ -178,7 +179,8 @@ public class SecurityConfig {
         // 根据用户ID生成token
         String token = JwtUtils.createJwt(loginUser.getUser().getId().toString());
         // 将用户信息存入redis
-        redisTemplate.opsForValue().set(RedisConstants.BACKGROUND_LOGIN_USER_ID + loginUser.getUser().getId(), loginUser);
+        redisTemplate.opsForValue().set(RedisConstants.BACKGROUND_LOGIN_USER_ID + loginUser.getUser().getId(),
+                loginUser);
         // 返回token
         LoginUserVo loginUserVo = new LoginUserVo(token, null);
         writer.write(

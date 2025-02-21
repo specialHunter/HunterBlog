@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.hunter.domain.entity.User">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="username" column="user_name" jdbcType="VARCHAR"/>
             <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="CHAR"/>

@@ -1,7 +1,9 @@
 package com.hunter.service;
 
-import com.hunter.domain.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hunter.domain.ResponseResult;
+import com.hunter.domain.entity.Menu;
+import com.hunter.domain.vo.RoutersVo;
 
 import java.util.List;
 
@@ -17,8 +19,16 @@ public interface MenuService extends IService<Menu> {
     /**
      * 根据用户ID查询权限标识集合
      *
-     * @param id 用户ID
+     * @param userId 用户ID
      * @return 权限标识集合
      */
-    List<String> getPermsByUserId(Long id);
+    List<String> getPermsByUserId(Long userId);
+
+    /**
+     * 根据用户Id查询能访问的菜单数据，返回菜单树
+     *
+     * @param userId 用户Id
+     * @return 菜单数据
+     */
+    ResponseResult<RoutersVo> getMenuTreeByUserId(Long userId);
 }
