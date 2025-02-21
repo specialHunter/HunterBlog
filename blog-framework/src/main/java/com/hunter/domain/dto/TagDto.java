@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @Schema(name = "标签列表DTO", description = "查询标签列表的请求体")
-public class TagListDto {
+public class TagDto {
     /**
      * 标签名
      */

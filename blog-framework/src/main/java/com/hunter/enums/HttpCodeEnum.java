@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * 网络响应枚举类
+ *
  * @author Hunter
  * @since 2024/12/30
  */
@@ -14,7 +15,8 @@ public enum HttpCodeEnum {
     FILE_TYPE_ERROR(415, "不支持的文件类型，请上传jpg、png、jpeg格式的文件"),
     USERNAME_EXISTS(416, "用户名已存在"),
     NICK_NAME_EXISTS(417, "昵称已存在"),
-    EMAIL_EXISTS(418, "邮箱已存在");
+    EMAIL_EXISTS(418, "邮箱已存在"),
+    TAG_NAME_CANNOT_EMPTY(419, "标签名称不能为空");
 
     final int code;
     final String msg;
