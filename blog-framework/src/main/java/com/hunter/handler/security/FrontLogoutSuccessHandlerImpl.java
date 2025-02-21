@@ -19,14 +19,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * 注销成功处理器
+ * 前台用户注销成功处理器
  *
  * @author Hunter
  * @since 2025/1/21
  */
 @Component
 @Slf4j
-public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
+public class FrontLogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     @Resource(name = "customRedisTemplate")
     private RedisTemplate<String, Object> redisTemplate;
 

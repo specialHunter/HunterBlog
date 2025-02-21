@@ -7,7 +7,7 @@ import com.hunter.domain.vo.LoginUserVo;
 import com.hunter.domain.vo.UserInfoVo;
 import com.hunter.filter.JsonUsernamePasswordAuthenticationFilter;
 import com.hunter.filter.JwtAuthenticationFilter;
-import com.hunter.handler.security.LogoutSuccessHandlerImpl;
+import com.hunter.handler.security.FrontLogoutSuccessHandlerImpl;
 import com.hunter.utils.BeanCopyUtils;
 import com.hunter.utils.JwtUtils;
 import jakarta.annotation.Resource;
@@ -62,7 +62,7 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Resource
-    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+    private FrontLogoutSuccessHandlerImpl logoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

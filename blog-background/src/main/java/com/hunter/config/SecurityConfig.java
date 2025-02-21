@@ -6,7 +6,7 @@ import com.hunter.domain.entity.LoginUser;
 import com.hunter.domain.vo.LoginUserVo;
 import com.hunter.filter.JsonUsernamePasswordAuthenticationFilter;
 import com.hunter.filter.JwtAuthenticationFilter;
-import com.hunter.handler.security.LogoutSuccessHandlerImpl;
+import com.hunter.handler.security.BackgroundLogoutSuccessHandlerImpl;
 import com.hunter.utils.JwtUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +60,7 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Resource
-    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+    private BackgroundLogoutSuccessHandlerImpl logoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -155,7 +155,7 @@ public class SecurityConfig {
         String message = null;
         if (exception instanceof BadCredentialsException badCredentialsException) {
             message = badCredentialsException.getMessage();
-        } else if (exception instanceof InsufficientAuthenticationException insufficientAuthenticationException) {
+        } else if (exception instanceof InsufficientAuthenticationException) {
             message = "认证失败，请登录后操作";
         } else {
             message = exception.getMessage();
