@@ -26,7 +26,11 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-      # 逻辑删除的字段名，查询时会自动忽略已被逻辑删除的行
+      # 逻辑删除，工作方式：
+      #   插入：逻辑删除字段的值不受限制。
+      #   查找：自动添加条件，过滤掉标记为已删除的记录。
+      #   更新：防止更新已删除的记录。
+      #   删除：将删除操作转换为更新操作，标记记录为已删除。
       logic-delete-field: delFlag
       logic-delete-value: 1
       logic-not-delete-value: 0
