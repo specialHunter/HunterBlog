@@ -79,7 +79,7 @@ public class TagContoller {
     public <T> ResponseResult<T> deleteTags(String ids) {
         // 单独删除
         if (!ids.contains(",")) {
-            tagService.removeById(ids);
+            tagService.removeById(Long.parseLong(ids));
         } else {
             List<Long> idList = Arrays.stream(ids.split(","))
                     .map(Long::parseLong)
