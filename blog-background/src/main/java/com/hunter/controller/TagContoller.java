@@ -4,6 +4,7 @@ import com.hunter.domain.ResponseResult;
 import com.hunter.domain.dto.TagDto;
 import com.hunter.domain.entity.Tag;
 import com.hunter.domain.vo.PageVo;
+import com.hunter.domain.vo.TagVo;
 import com.hunter.service.TagService;
 import com.hunter.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,6 +88,26 @@ public class TagContoller {
                     .toList();
             tagService.removeBatchByIds(idList);
         }
+        return ResponseResult.success();
+    }
+
+    /**
+     * 获取标签详情
+     *
+     * @param id 标签id
+     * @return 标签详情
+     */
+    @GetMapping("{id}")
+    public ResponseResult<TagVo> getTag(@PathVariable("id") Long id) {
+        Tag tag = tagService.getById(id);
+        TagVo tagVo = BeanCopyUtils.copyBean(tag, TagVo.class);
+        return ResponseResult.success(tagVo);
+    }
+
+    @PutMapping
+    public <T> ResponseResult<T> updateTag(@RequestBody TagDto tagDto) {
+        Tag tag = BeanCopyUtils.copyBean(tagDto, Tag.class);
+        tagService.updateById(tag);
         return ResponseResult.success();
     }
 }
