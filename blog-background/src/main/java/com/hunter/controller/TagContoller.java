@@ -104,10 +104,29 @@ public class TagContoller {
         return ResponseResult.success(tagVo);
     }
 
+    /**
+     * 更新标签
+     *
+     * @param tagDto 标签信息
+     * @param <T>    返回类型
+     * @return 更新结果
+     */
     @PutMapping
     public <T> ResponseResult<T> updateTag(@RequestBody TagDto tagDto) {
         Tag tag = BeanCopyUtils.copyBean(tagDto, Tag.class);
         tagService.updateById(tag);
         return ResponseResult.success();
+    }
+
+    /**
+     * 获取所有标签
+     *
+     * @return 所有标签
+     */
+    @GetMapping("/listAllTag")
+    public ResponseResult<List<TagVo>> listAllTag() {
+        List<Tag> tags = tagService.list();
+        List<TagVo> tagVos = BeanCopyUtils.copyBeanList(tags, TagVo.class);
+        return ResponseResult.success(tagVos);
     }
 }
