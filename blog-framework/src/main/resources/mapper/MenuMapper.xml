@@ -63,6 +63,7 @@
         WHERE menu_type IN ('C', 'M')
           AND status = '0'
           AND del_flag = '0'
+        ORDER BY parent_id, order_num
     </select>
 
     <select id="getMenusByUserId" resultType="com.hunter.domain.vo.MenuVo">
@@ -86,5 +87,6 @@
           AND m.menu_type IN ('C', 'M')
           AND m.status = '0'
           AND m.del_flag = '0'
+        ORDER BY parent_id, order_num
     </select>
 </mapper>
