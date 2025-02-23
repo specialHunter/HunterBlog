@@ -3,6 +3,9 @@ package com.hunter.service;
 import com.hunter.domain.ResponseResult;
 import com.hunter.domain.entity.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hunter.domain.vo.CategoryVo;
+
+import java.util.List;
 
 /**
 * @author Hunter
@@ -16,5 +19,5 @@ public interface CategoryService extends IService<Category> {
      *
      * @return 分类列表
      */
-    ResponseResult<?> getCategoryList();
+    ResponseResult<List<CategoryVo>> getCategoryList();
 }

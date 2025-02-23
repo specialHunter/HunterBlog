@@ -1,6 +1,7 @@
 package com.hunter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hunter.constants.SystemConstants;
 import com.hunter.domain.ResponseResult;
@@ -32,12 +33,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
 
     @Override
-    public ResponseResult<?> getCategoryList() {
+    public ResponseResult<List<CategoryVo>> getCategoryList() {
         // 展示有发布正式文章的分类
 
         // 先查文章表 状态为已发布、未删除的文章
-        LambdaQueryWrapper<Article> articleQueryWrapper = new LambdaQueryWrapper<>();
-        articleQueryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_RELEASE);
+        LambdaQueryWrapper<Article> articleQueryWrapper = Wrappers.<Article>lambdaQuery()
+                .eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_RELEASE);
         List<Article> articleList = articleService.list(articleQueryWrapper);
         // 获取文章的分类id，去重
         Set<Long> categoryIdSet = articleList.stream()

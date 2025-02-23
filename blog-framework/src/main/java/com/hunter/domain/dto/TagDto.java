@@ -14,6 +14,11 @@ import lombok.Data;
 @Schema(name = "标签列表DTO", description = "查询标签列表的请求体")
 public class TagDto {
     /**
+     * 标签ID
+     */
+    private Long id;
+
+    /**
      * 标签名
      */
     private String name;
