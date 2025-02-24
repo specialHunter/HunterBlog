@@ -121,6 +121,44 @@
                     <parameters>true</parameters>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <!-- 构建项目时，将项目的依赖包以及自身的代码打包成一个单独的JAR文件，
+                使得项目可以作为独立的单元进行分发和部署 -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.0</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- 指定在打包阶段执行该插件任务，即mvn package assembly:single -->
+                        <phase>package</phase>
+                        <goals>
+                            <!-- single任务表示只生成一个JAR文件 -->
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- 定义打包成的归档文件（JAR包）的配置 -->
+                    <archive>
+                        <!-- 定义了MANIFEST.MF文件的内容，这是JAR包的元数据文件 -->
+                        <manifest>
+                            <!-- 定义了JAR包的主类 -->
+                            <mainClass>com.hunter.HunterBlogApplication</mainClass>
+                        </manifest>
+                        <manifest>
+                            <mainClass>com.hunter.BlogBackgroundApplication</mainClass>
+                        </manifest>
+                    </archive>
+                    <!-- 指定了输出目录 -->
+                    <outputDirectory>${project.build.directory}/#maven-assembly-plugin</outputDirectory>
+                    <descriptorRefs>
+                        <!-- 将依赖包以及项目自身代码打包成一个JAR包，方便部署和运行 -->
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
