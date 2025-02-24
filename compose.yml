@@ -1,12 +1,27 @@
 services:
-  spring:
-    container_name: app_hunter_blog
-    build: . # 表示使用构建的镜像，. 表示使用当前目录下的Dockerfile进行构建
+  # 自定义的服务名称
+  hunter_blog_front:
+    container_name: hunter_blog_front
+    build:
+      context: . # 表示使用构建的镜像，. 表示使用当前目录下的Dockerfile进行构建
+      dockerfile: Dockerfile_front # 指定Dockerfile文件
     ports:
       - "7777:7777"
     depends_on:
       mysql:
         condition: service_healthy # mysql服务稳定后再创建项目容器
+
+  hunter_blog_background:
+    container_name: hunter_blog_background
+    build:
+      context: .
+      dockerfile: Dockerfile_background
+    ports:
+      - "8989:8989"
+    depends_on:
+      mysql:
+        condition: service_healthy # mysql服务稳定后再创建项目容器
+
   mysql:
     container_name: app_mysql
     image: mysql/mysql-server:8.0.32 # 表示使用对应的镜像，自动从仓库下载，然后启动容器
@@ -19,8 +34,24 @@ services:
       - ./blog-front/src/main/resources/sql:/docker-entrypoint-initdb.d # 挂载需要执行的sql脚本所在目录
     ports:
       - "3306:3306" # 对外访问的端口
+#    command: --default-authentication-plugin=mysql_native_password #解决外部无法访问
+
   redis:
     container_name: app_redis
     image: redis:7.4.2
     ports:
       - "6379:6379"
+
+  nginx:
+    container_name: app_nginx
+    image: nginx:1.26.3
+    ports:
+      - "80:80"
+      # 前台系统的前端映射端口
+      - "8093:8093"
+      # 后台系统的前端映射端口
+      - "8094:8094"
+    volumes:
+      - /home/hunter/nginx/html:/usr/share/nginx/html # 挂载静态资源目录
+      - /home/hunter/nginx/logs:/var/log/nginx # 挂载日志目录
+      - /home/hunter/nginx/conf:/etc/nginx # 挂载配置文件目录

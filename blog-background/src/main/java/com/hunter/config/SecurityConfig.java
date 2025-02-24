@@ -155,7 +155,7 @@ public class SecurityConfig {
         String message = null;
         if (exception instanceof BadCredentialsException badCredentialsException) {
             message = badCredentialsException.getMessage();
-        } else if (exception instanceof InsufficientAuthenticationException insufficientAuthenticationException) {
+        } else if (exception instanceof InsufficientAuthenticationException) {
             message = "认证失败，请登录后操作";
         } else {
             message = exception.getMessage();
