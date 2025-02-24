@@ -1,0 +1,9 @@
+FROM eclipse-temurin:17-jdk
+
+COPY blog-background/target/blog-background.jar blog-background.jar
+
+# RUN命令在镜像构建时执行
+# touch命令的作用是创建一个空文件（如果该文件不存在），或者如果文件已经存在，则更新文件的时间戳为当前时间。
+RUN bash -c 'touch /blog-background.jar'
+# ENTRYPOINT指容器启动时要执行的命令，与CMD指令不同，不会被 docker run 命令的参数覆盖。
+ENTRYPOINT ["java", "-jar", "/blog-background.jar"]
